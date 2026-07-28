@@ -38,8 +38,6 @@
       overflow-x: hidden;
       padding-bottom: 100px;
     }
-    
-    /* Ambient background */
     .ambient {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none; z-index: 0;
@@ -50,69 +48,20 @@
       filter: blur(80px);
       opacity: 0.15;
     }
-    .orb-1 {
-      width: 200px; height: 200px;
-      background: var(--accent);
-      top: -40px; right: -40px;
-      animation: float1 8s ease-in-out infinite;
-    }
-    .orb-2 {
-      width: 160px; height: 160px;
-      background: var(--accent2);
-      bottom: 20%; left: -30px;
-      animation: float2 10s ease-in-out infinite;
-    }
-    .orb-3 {
-      width: 120px; height: 120px;
-      background: var(--gold);
-      top: 50%; right: 20%;
-      animation: float3 12s ease-in-out infinite;
-    }
-    @keyframes float1 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(-20px,30px) scale(1.15); }
-    }
-    @keyframes float2 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(20px,-20px) scale(1.1); }
-    }
-    @keyframes float3 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(-15px,-25px) scale(1.2); }
-    }
+    .orb-1 { width: 200px; height: 200px; background: var(--accent); top: -40px; right: -40px; animation: float1 8s ease-in-out infinite; }
+    .orb-2 { width: 160px; height: 160px; background: var(--accent2); bottom: 20%; left: -30px; animation: float2 10s ease-in-out infinite; }
+    .orb-3 { width: 120px; height: 120px; background: var(--gold); top: 50%; right: 20%; animation: float3 12s ease-in-out infinite; }
+    @keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-20px,30px) scale(1.15); } }
+    @keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-20px) scale(1.1); } }
+    @keyframes float3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-15px,-25px) scale(1.2); } }
 
-    .container {
-      max-width: 440px;
-      margin: 0 auto;
-      padding: 0 16px;
-      position: relative;
-      z-index: 1;
-    }
+    .container { max-width: 440px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
 
-    /* ===== TOP HEADER ===== */
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 0 8px;
-    }
-    .top-bar .greeting {
-      font-size: 13px;
-      color: var(--text2);
-    }
-    .top-bar .greeting strong {
-      color: var(--text);
-      font-size: 14px;
-    }
-    .avatar {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px;
-    }
+    .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 0 8px; }
+    .top-bar .greeting { font-size: 13px; color: var(--text2); }
+    .top-bar .greeting strong { color: var(--text); font-size: 14px; }
+    .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 16px; }
 
-    /* ===== HERO CLOCK ===== */
     .hero-card {
       background: linear-gradient(145deg, #1e1b4b, #312e81, #1e1b4b);
       border-radius: var(--radius);
@@ -122,421 +71,234 @@
       overflow: hidden;
       border: 1px solid rgba(129,140,248,0.15);
     }
-    .hero-card::after {
-      content: '';
-      position: absolute;
-      top: -50%; right: -30%;
-      width: 200px; height: 200px;
-      background: radial-gradient(circle, rgba(192,132,252,0.15), transparent);
-      border-radius: 50%;
-    }
-    .hero-time {
-      font-size: 52px;
-      font-weight: 200;
-      letter-spacing: 3px;
-      font-variant-numeric: tabular-nums;
-      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
-      position: relative; z-index: 1;
-    }
-    .hero-date {
-      font-size: 14px;
-      color: rgba(255,255,255,0.65);
-      margin-top: 2px;
-      position: relative; z-index: 1;
-    }
-    .hero-motto {
-      font-size: 14px;
-      color: rgba(255,255,255,0.85);
-      margin-top: 12px;
-      font-weight: 500;
-      position: relative; z-index: 1;
-      line-height: 1.6;
-    }
+    .hero-card::after { content: ''; position: absolute; top: -50%; right: -30%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(192,132,252,0.15), transparent); border-radius: 50%; }
+    .hero-time { font-size: 52px; font-weight: 200; letter-spacing: 3px; font-variant-numeric: tabular-nums; font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; position: relative; z-index: 1; }
+    .hero-date { font-size: 14px; color: rgba(255,255,255,0.65); margin-top: 2px; position: relative; z-index: 1; }
+    .hero-motto { font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 12px; font-weight: 500; position: relative; z-index: 1; line-height: 1.6; }
 
-    /* ===== STREAK BADGE ===== */
-    .streak-badge {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-      margin-bottom: 16px;
-      border: 1px solid rgba(251,191,36,0.2);
-    }
-    .streak-fire {
-      font-size: 32px;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-    }
+    .streak-badge { display: flex; align-items: center; gap: 10px; background: var(--surface); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; border: 1px solid rgba(251,191,36,0.2); }
+    .streak-fire { font-size: 32px; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
     .streak-info { flex: 1; }
-    .streak-count {
-      font-size: 24px;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .streak-count { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, var(--gold), var(--gold2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .streak-label { font-size: 12px; color: var(--text2); margin-top: -2px; }
-    .streak-msg { font-size: 11px; color: var(--text3); margin-top: 4px; }
 
-    /* ===== TODAY'S SUCCESS ===== */
-    .today-card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 16px;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .today-card .card-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .today-card .card-subtitle {
-      font-size: 12px;
-      color: var(--text3);
-      margin-bottom: 14px;
-    }
-    .today-input {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      font-size: 14px;
-      color: var(--text);
-      font-family: inherit;
-      outline: none;
-      resize: none;
-      min-height: 80px;
-      line-height: 1.7;
-      transition: border-color 0.3s;
-    }
-    .today-input:focus {
-      border-color: var(--accent);
-    }
+    .today-card { background: var(--surface); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.05); }
+    .today-card .card-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+    .today-card .card-subtitle { font-size: 12px; color: var(--text3); margin-bottom: 14px; }
+    .today-input { width: 100%; background: var(--surface2); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; color: var(--text); font-family: inherit; outline: none; resize: none; min-height: 80px; line-height: 1.7; transition: border-color 0.3s; }
+    .today-input:focus { border-color: var(--accent); }
     .today-input::placeholder { color: var(--text3); }
-    .today-input.has-content {
-      border-color: rgba(52,211,153,0.3);
-      background: rgba(52,211,153,0.05);
-    }
-    .save-indicator {
-      font-size: 11px;
-      color: var(--green);
-      margin-top: 8px;
-      display: none;
-      align-items: center; gap: 4px;
-    }
+    .today-input.has-content { border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.05); }
+    .save-indicator { font-size: 11px; color: var(--green); margin-top: 8px; display: none; align-items: center; gap: 4px; }
     .save-indicator.show { display: flex; }
-    .quick-prompts {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    .quick-prompt {
-      font-size: 11px;
-      padding: 5px 10px;
-      background: var(--surface2);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 20px;
-      color: var(--text2);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .quick-prompt:active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
+    .quick-prompts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .quick-prompt { font-size: 11px; padding: 5px 10px; background: var(--surface2); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; color: var(--text2); cursor: pointer; transition: all 0.2s; }
+    .quick-prompt:active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-    /* ===== SUCCESS TIMELINE ===== */
-    .timeline-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .timeline {
-      position: relative;
-      padding-left: 28px;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 11px;
-      top: 8px;
-      bottom: 8px;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
-    }
-    .timeline-item {
-      position: relative;
-      margin-bottom: 16px;
-      padding: 14px 16px;
-      background: var(--surface);
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(255,255,255,0.04);
-      animation: fadeInUp 0.4s ease-out;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .timeline-dot {
-      position: absolute;
-      left: -21px;
-      top: 18px;
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: var(--accent);
-      border: 3px solid var(--bg);
-    }
+    .timeline-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before { content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent); }
+    .timeline-item { position: relative; margin-bottom: 16px; padding: 14px 16px; background: var(--surface); border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.04); animation: fadeInUp 0.4s ease-out; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .timeline-dot { position: absolute; left: -21px; top: 18px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg); }
     .timeline-item:nth-child(odd) .timeline-dot { background: var(--accent); }
     .timeline-item:nth-child(even) .timeline-dot { background: var(--accent2); }
     .timeline-item:nth-child(3n) .timeline-dot { background: var(--gold); }
-    .tl-date {
-      font-size: 11px;
-      color: var(--text3);
-      margin-bottom: 4px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-    .tl-content {
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--text);
-    }
-    .tl-delete {
-      position: absolute;
-      top: 12px; right: 14px;
-      font-size: 14px;
-      color: var(--text3);
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    .timeline-item:hover .tl-delete,
-    .timeline-item:active .tl-delete { opacity: 0.6; }
+    .tl-date { font-size: 11px; color: var(--text3); margin-bottom: 4px; font-weight: 600; letter-spacing: 0.5px; }
+    .tl-content { font-size: 13px; line-height: 1.7; color: var(--text); }
+    .tl-delete { position: absolute; top: 12px; right: 14px; font-size: 14px; color: var(--text3); cursor: pointer; opacity: 0; transition: opacity 0.2s; }
+    .timeline-item:hover .tl-delete, .timeline-item:active .tl-delete { opacity: 0.6; }
 
-    /* ===== NAV BAR (bottom) ===== */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: rgba(26,26,46,0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 0 env(safe-area-inset-bottom, 8px);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      z-index: 100;
-    }
-    .nav-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      background: none;
-      border: none;
-      color: var(--text3);
-      font-size: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 6px 12px;
-      border-radius: 12px;
-      transition: all 0.2s;
-      font-family: inherit;
-    }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(26,26,46,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; justify-content: space-around; padding: 8px 0 env(safe-area-inset-bottom, 8px); border-top: 1px solid rgba(255,255,255,0.06); z-index: 100; }
+    .nav-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; color: var(--text3); font-size: 10px; font-weight: 600; cursor: pointer; padding: 6px 12px; border-radius: 12px; transition: all 0.2s; font-family: inherit; position: relative; }
     .nav-btn .nav-icon { font-size: 20px; }
-    .nav-btn.active {
-      color: var(--accent);
-    }
-    .nav-btn.active::before {
-      content: '';
-      position: absolute;
-      top: -9px;
-      width: 20px; height: 2px;
-      background: var(--accent);
-      border-radius: 1px;
-    }
-    .nav-btn { position: relative; }
+    .nav-btn.active { color: var(--accent); }
+    .nav-btn.active::before { content: ''; position: absolute; top: -9px; width: 20px; height: 2px; background: var(--accent); border-radius: 1px; }
 
-    /* ===== PAGE SECTIONS ===== */
     .page { display: none; }
     .page.active { display: block; }
 
-    /* ===== MODULE CARDS ===== */
-    .section-title {
-      font-size: 15px; font-weight: 700;
-      margin: 0 0 12px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 12px;
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-    .card h3 {
-      font-size: 13px; font-weight: 700;
-      margin-bottom: 10px;
-      display: flex; align-items: center; gap: 6px;
-    }
+    .section-title { font-size: 16px; font-weight: 700; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+    .card { background: var(--surface); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.04); }
+    .card h3 { font-size: 13px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
     table.mini { width: 100%; border-collapse: collapse; font-size: 12px; }
-    table.mini td {
-      padding: 6px 2px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    table.mini td:first-child { width: 56px; font-weight: 600; color: var(--text2); font-size: 11px; }
-    table.mini input {
-      width: 100%; border: none; background: transparent;
-      font-size: 12px; color: var(--text);
-      font-family: inherit; outline: none; padding: 4px 0;
-    }
+    table.mini td { padding: 6px 2px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    table.mini td:first-child { width: 60px; font-weight: 600; color: var(--text2); font-size: 11px; }
+    table.mini input { width: 100%; border: none; background: transparent; font-size: 12px; color: var(--text); font-family: inherit; outline: none; padding: 4px 0; }
     table.mini input::placeholder { color: var(--text3); }
 
-    .day-chips {
-      display: flex; gap: 4px; margin-bottom: 12px;
-      overflow-x: auto; padding-bottom: 2px;
-    }
+    .day-chips { display: flex; gap: 4px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 2px; }
     .day-chips::-webkit-scrollbar { display: none; }
-    .day-chip {
-      flex: 0 0 auto;
-      padding: 6px 10px; border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: var(--surface2);
-      font-size: 11px; font-weight: 600; cursor: pointer;
-      color: var(--text2); font-family: inherit; white-space: nowrap;
-    }
-    .day-chip.active {
-      background: var(--accent); color: #fff; border-color: var(--accent);
-    }
+    .day-chip { flex: 0 0 auto; padding: 6px 10px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); background: var(--surface2); font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--text2); font-family: inherit; white-space: nowrap; }
+    .day-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-    .info-item {
-      display: flex; align-items: flex-start; gap: 8px;
-      padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
-      font-size: 11px;
-    }
+    .info-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 11px; }
     .info-item:last-child { border-bottom: none; }
-    .info-item .dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--accent); margin-top: 5px; flex-shrink: 0;
-    }
+    .info-item .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); margin-top: 5px; flex-shrink: 0; }
     .info-item .meta { color: var(--text3); font-size: 10px; margin-top: 2px; }
 
-    .mat-card {
-      background: var(--surface2);
-      border-radius: var(--radius-sm);
-      padding: 12px; margin-bottom: 8px;
-      border-left: 3px solid var(--accent);
-    }
-    .mat-card h4 { font-size: 12px; font-weight: 700; margin-bottom: 3px; color: var(--accent); }
-    .mat-card p { font-size: 11px; color: var(--text2); line-height: 1.6; }
-    .mat-card .tags {
-      display: flex; flex-wrap: wrap; gap: 3px; margin-top: 6px;
-    }
-    .mat-card .tag {
-      font-size: 10px; padding: 2px 7px;
-      background: rgba(129,140,248,0.1);
-      border-radius: 6px; color: var(--accent);
-    }
-
-    .pet-row { display: flex; gap: 10px; align-items: flex-start; }
-    .pet-photo {
-      width: 80px; height: 80px;
-      border-radius: var(--radius-sm);
-      border: 2px dashed rgba(255,255,255,0.1);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      cursor: pointer; overflow: hidden; position: relative;
-      background: var(--surface2); flex-shrink: 0;
-      font-size: 9px; color: var(--text3); gap: 2px;
-    }
-    .pet-photo img {
-      width: 100%; height: 100%; object-fit: cover;
-      position: absolute; top: 0; left: 0;
-    }
-    .pet-photo .ph { font-size: 22px; }
-    .pet-photo .pl { font-size: 9px; color: var(--text3); position: relative; z-index: 1; }
-    .pet-photo.has-photo .ph,
-    .pet-photo.has-photo .pl { display: none; }
-    .pet-photo .pdel {
-      position: absolute; top: 3px; right: 3px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: rgba(0,0,0,0.6); color: #fff; font-size: 10px;
-      display: none; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 2;
-    }
-    .pet-photo.has-photo .pdel { display: flex; }
-    .pet-info { flex: 1; }
-    .pet-info .pname { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
-    .pet-info textarea {
-      width: 100%; border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px; padding: 8px 10px;
-      font-size: 11px; font-family: inherit;
-      background: var(--surface2); color: var(--text);
-      outline: none; resize: none; min-height: 60px;
-    }
-    .pet-info textarea::placeholder { color: var(--text3); }
-
-    .add-btn {
-      width: 100%; padding: 10px;
-      border: 1px dashed rgba(255,255,255,0.1);
-      border-radius: var(--radius-sm);
-      background: transparent; color: var(--text3);
-      font-size: 12px; cursor: pointer;
-      font-family: inherit; margin-top: 6px;
-    }
-    .add-btn:active { border-color: var(--accent); color: var(--accent); }
-
-    .refresh-btn {
-      font-size: 10px; color: var(--accent);
-      background: rgba(129,140,248,0.1); border: none;
-      padding: 4px 10px; border-radius: 8px;
-      cursor: pointer; font-family: inherit; font-weight: 600;
-    }
-    .fw-item {
-      padding: 8px 10px; background: var(--surface2);
-      border-radius: 10px; margin-bottom: 5px; font-size: 11px;
-    }
+    .fw-item { padding: 8px 10px; background: var(--surface2); border-radius: 10px; margin-bottom: 5px; font-size: 11px; }
     .fw-item .fw-type { font-weight: 700; color: var(--accent); }
     .fw-item .fw-desc { color: var(--text3); font-size: 10px; margin-top: 1px; }
 
-    .goal-row {
-      display: flex; align-items: center; gap: 6px;
-      padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 11px;
-    }
+    .goal-row { display: flex; align-items: center; gap: 6px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 11px; }
     .goal-row:last-child { border-bottom: none; }
-    .goal-row input {
-      flex: 1; border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px; padding: 5px 8px;
-      font-size: 11px; font-family: inherit;
-      background: var(--surface2); color: var(--text); outline: none;
-    }
+    .goal-row input { flex: 1; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 5px 8px; font-size: 11px; font-family: inherit; background: var(--surface2); color: var(--text); outline: none; }
     .goal-row input::placeholder { color: var(--text3); }
 
-    /* Toast */
+    .pet-row { display: flex; gap: 10px; align-items: flex-start; }
+    .pet-photo { width: 80px; height: 80px; border-radius: var(--radius-sm); border: 2px dashed rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; background: var(--surface2); flex-shrink: 0; font-size: 9px; color: var(--text3); gap: 2px; }
+    .pet-photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+    .pet-photo .ph { font-size: 22px; }
+    .pet-photo .pl { font-size: 9px; color: var(--text3); position: relative; z-index: 1; }
+    .pet-photo.has-photo .ph, .pet-photo.has-photo .pl { display: none; }
+    .pet-photo .pdel { position: absolute; top: 3px; right: 3px; width: 16px; height: 16px; border-radius: 50%; background: rgba(0,0,0,0.6); color: #fff; font-size: 9px; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 2; }
+    .pet-photo.has-photo .pdel { display: flex; }
+    .pet-info { flex: 1; }
+    .pet-info .pname { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+    .pet-info textarea { width: 100%; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 8px 10px; font-size: 11px; font-family: inherit; background: var(--surface2); color: var(--text); outline: none; resize: none; min-height: 60px; }
+    .pet-info textarea::placeholder { color: var(--text3); }
+
+    .add-btn { width: 100%; padding: 10px; border: 1px dashed rgba(255,255,255,0.1); border-radius: var(--radius-sm); background: transparent; color: var(--text3); font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .add-btn:active { border-color: var(--accent); color: var(--accent); }
+    .refresh-btn { font-size: 10px; color: var(--accent); background: rgba(129,140,248,0.1); border: none; padding: 4px 10px; border-radius: 8px; cursor: pointer; font-family: inherit; font-weight: 600; }
+
+    /* ===== 申论素材 ===== */
+    .daily-material {
+      background: linear-gradient(145deg, #1e1b4b, #312e81);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(129,140,248,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .daily-material::before {
+      content: 'TODAY';
+      position: absolute;
+      top: 8px; right: 12px;
+      font-size: 10px; font-weight: 800;
+      color: rgba(255,255,255,0.1);
+      letter-spacing: 2px;
+    }
+    .daily-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .daily-header .daily-icon { font-size: 22px; }
+    .daily-header .daily-title { flex: 1; }
+    .daily-header .daily-title h3 { font-size: 15px; margin-bottom: 2px; }
+    .daily-header .daily-title .daily-sub { font-size: 11px; color: rgba(255,255,255,0.6); }
+    .daily-category {
+      display: inline-block;
+      padding: 3px 10px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 20px;
+      font-size: 10px;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .daily-content { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.85); margin-bottom: 12px; }
+    .daily-section { margin-top: 14px; }
+    .daily-section h4 { font-size: 12px; color: var(--gold); margin-bottom: 6px; font-weight: 700; }
+    .daily-section p { font-size: 12px; line-height: 1.8; color: rgba(255,255,255,0.75); }
+    .daily-quote {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      border-left: 3px solid var(--gold);
+      font-size: 12px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.85);
+      font-style: italic;
+    }
+    .material-card {
+      background: var(--surface2);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin-bottom: 8px;
+      border-left: 3px solid var(--accent);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .material-card:hover { background: rgba(129,140,248,0.08); }
+    .material-card .mc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .material-card .mc-title { font-size: 13px; font-weight: 700; color: var(--accent); }
+    .material-card .mc-arrow { font-size: 12px; color: var(--text3); transition: transform 0.3s; }
+    .material-card.expanded .mc-arrow { transform: rotate(180deg); }
+    .material-card .mc-summary { font-size: 11px; color: var(--text2); line-height: 1.5; }
+    .material-card .mc-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    .material-card.expanded .mc-detail { max-height: 2000px; }
+    .material-card .mc-content {
+      padding-top: 12px;
+      font-size: 12px;
+      line-height: 1.8;
+      color: var(--text);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin-top: 10px;
+    }
+    .material-card .mc-section { margin-bottom: 10px; }
+    .material-card .mc-section h5 { font-size: 11px; color: var(--gold); margin-bottom: 4px; font-weight: 700; }
+    .material-card .mc-section p { font-size: 11px; color: var(--text2); line-height: 1.7; }
+    .material-card .mc-quote {
+      padding: 10px 12px;
+      background: rgba(129,140,248,0.06);
+      border-radius: 8px;
+      border-left: 2px solid var(--accent);
+      font-size: 11px;
+      color: var(--text);
+      line-height: 1.6;
+      margin-top: 8px;
+      font-style: italic;
+    }
+    .material-card .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+    .material-card .tag { font-size: 10px; padding: 2px 8px; background: rgba(129,140,248,0.1); border-radius: 6px; color: var(--accent); }
+
+    .category-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .category-tabs::-webkit-scrollbar { display: none; }
+    .cat-tab {
+      flex: 0 0 auto;
+      padding: 6px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--surface);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text2);
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .cat-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
     .toast {
       position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%);
-      background: var(--surface2); color: var(--text);
-      padding: 8px 18px; border-radius: 20px;
-      font-size: 12px; z-index: 200;
-      opacity: 0; transition: opacity 0.3s; pointer-events: none;
-      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--surface2); color: var(--text); padding: 8px 18px;
+      border-radius: 20px; font-size: 12px; z-index: 200; opacity: 0;
+      transition: opacity 0.3s; pointer-events: none; border: 1px solid rgba(255,255,255,0.08);
     }
     .toast.show { opacity: 1; }
-
-    .empty-state {
-      text-align: center; padding: 30px 20px; color: var(--text3);
-    }
+    .empty-state { text-align: center; padding: 30px 20px; color: var(--text3); }
     .empty-state .empty-icon { font-size: 40px; margin-bottom: 8px; }
     .empty-state p { font-size: 12px; }
   </style>
@@ -549,37 +311,27 @@
   </div>
 
   <div class="container">
-    <!-- Top Bar -->
     <div class="top-bar">
       <div class="greeting" id="greetingText">下午好，<strong>追光者</strong> 👋</div>
       <div class="avatar">🛤</div>
     </div>
 
-    <!-- Hero Clock -->
     <div class="hero-card">
       <div class="hero-time" id="liveClock">00:00:00</div>
       <div class="hero-date" id="liveDate"></div>
-      <div class="hero-motto">
-        <span id="mottoIcon">💪</span> <span id="mottoText">每一天的努力，都是上岸的阶梯。</span>
-      </div>
+      <div class="hero-motto"><span id="mottoIcon">💪</span> <span id="mottoText">每一天的努力，都是上岸的阶梯。</span></div>
     </div>
 
-    <!-- ==================== PAGE: SUCCESS (Home) ==================== -->
+    <!-- PAGE: SUCCESS -->
     <div class="page active" id="page-success">
-      <!-- Streak -->
       <div class="streak-badge">
         <span class="streak-fire">🔥</span>
         <div class="streak-info">
           <div class="streak-count" id="streakCount">0</div>
           <div class="streak-label">天连续成功记录</div>
         </div>
-        <div style="text-align:right;">
-          <div style="font-size:11px;color:var(--text2);" id="totalSuccess">共 0 条</div>
-        </div>
+        <div style="text-align:right;"><div style="font-size:11px;color:var(--text2);" id="totalSuccess">共 0 条</div></div>
       </div>
-      <div class="streak-msg" style="margin-top:-8px;margin-bottom:16px;font-size:11px;color:var(--text3);text-align:center;" id="streakMsg">从今天开始，记录你的每一次成功 ✨</div>
-
-      <!-- Today's input -->
       <div class="today-card">
         <div class="card-title">⭐ 今天我做成的事</div>
         <div class="card-subtitle">哪怕再小，也值得被记住</div>
@@ -592,19 +344,13 @@
           <span class="quick-prompt" onclick="fillPrompt('认真陪了桃子和椰子')">🐶 陪狗狗</span>
         </div>
       </div>
-
-      <!-- Timeline -->
       <div class="timeline-title">📜 成功记录</div>
       <div class="timeline" id="successTimeline">
-        <div class="empty-state">
-          <div class="empty-icon">✨</div>
-          <p>每一天的成功都值得被铭记</p>
-          <p style="font-size:11px;margin-top:4px;">写下今天的第一条吧</p>
-        </div>
+        <div class="empty-state"><div class="empty-icon">✨</div><p>每一天的成功都值得被铭记</p><p style="font-size:11px;margin-top:4px;">写下今天的第一条吧</p></div>
       </div>
     </div>
 
-    <!-- ==================== PAGE: XINGCE ==================== -->
+    <!-- PAGE: XINGCE -->
     <div class="page" id="page-xingce">
       <div class="section-title">📖 行测刷题打卡</div>
       <div class="day-chips" id="xcDayChips"></div>
@@ -634,7 +380,7 @@
       </table></div>
     </div>
 
-    <!-- ==================== PAGE: SHIZHENG ==================== -->
+    <!-- PAGE: SHIZHENG -->
     <div class="page" id="page-shizheng">
       <div class="section-title">📰 时政推送</div>
       <div class="card">
@@ -652,9 +398,24 @@
       </div>
     </div>
 
-    <!-- ==================== PAGE: SHENLUN ==================== -->
+    <!-- PAGE: SHENLUN -->
     <div class="page" id="page-shenlun">
       <div class="section-title">✍️ 申论素材积累</div>
+
+      <!-- 每日申论素材 -->
+      <div class="daily-material" id="dailyMaterial">
+        <div class="daily-header">
+          <span class="daily-icon">📌</span>
+          <div class="daily-title"><h3>今日申论素材</h3><div class="daily-sub">每日精选 · 深度拆解</div></div>
+        </div>
+        <div class="daily-category" id="dailyCategory">生态环境保护</div>
+        <div class="daily-content" id="dailyTitle">太湖综合治理</div>
+        <div class="daily-section"><h4>📖 案例背景</h4><p id="dailyBackground">太湖流域是长三角地区重要的生态屏障。经过多年综合治理，太湖水质持续改善，蓝藻水华得到有效控制，成为全国湖泊生态修复的典范。</p></div>
+        <div class="daily-section"><h4>✍️ 答题话术</h4><p id="dailyUsage">可用于"绿色发展""生态文明建设""人与自然和谐共生"等主题。论证时可结合"久久为功""系统治理""生态惠民"等关键词。</p></div>
+        <div class="daily-section"><h4>🌟 金句摘录</h4><div class="daily-quote" id="dailyQuote">"绿水青山就是金山银山。太湖治理实践证明，生态保护与经济发展并非对立，而是可以相互促进、相得益彰。"</div></div>
+      </div>
+
+      <!-- 框架速查 -->
       <div class="card">
         <h3>🛠 唐棣答题框架速查</h3>
         <div class="fw-item"><div class="fw-type">📋 归纳概括</div><div class="fw-desc">总括句 + 分条列点（关键词前置，材料原文优先）</div></div>
@@ -663,22 +424,20 @@
         <div class="fw-item"><div class="fw-type">📄 贯彻执行</div><div class="fw-desc">背景目的 → 主体内容 → 结尾呼吁</div></div>
         <div class="fw-item"><div class="fw-type">✏️ 文章写作</div><div class="fw-desc">标题亮眼 → 开头破题 → 分论点递进 → 结尾升华</div></div>
       </div>
-      <div class="card">
-        <h3>🌿 生态环境保护</h3>
-        <div class="mat-card"><h4>太湖综合治理</h4><p>江苏太湖流域多年治理，水质显著改善，全国湖泊治理典范。</p><div class="tags"><span class="tag">绿色发展</span><span class="tag">流域治理</span><span class="tag">生态修复</span></div></div>
-        <div class="mat-card"><h4>长江十年禁渔</h4><p>江苏段禁渔成效显著，江豚重现，生物多样性恢复。</p><div class="tags"><span class="tag">人与自然和谐共生</span><span class="tag">生态文明</span></div></div>
-        <div class="mat-card"><h4>幸福河湖建设</h4><p>江苏全域推进，水生态治理与民生改善结合。</p><div class="tags"><span class="tag">生态惠民</span><span class="tag">美丽江苏</span></div></div>
+
+      <!-- 分类筛选 -->
+      <div class="category-tabs" id="categoryTabs">
+        <button class="cat-tab active" data-cat="all">全部</button>
+        <button class="cat-tab" data-cat="生态">🌿 生态</button>
+        <button class="cat-tab" data-cat="治理">🏘 治理</button>
+        <button class="cat-tab" data-cat="经济">⚙ 经济</button>
+        <button class="cat-tab" data-cat="文化">📖 文化</button>
       </div>
-      <div class="card">
-        <h3>🏘 基层治理 / 民生服务</h3>
-        <div class="mat-card"><h4>12345热线改革</h4><p>"一企来""一号答"，群众诉求接得更快办得更实。</p><div class="tags"><span class="tag">为民办实事</span><span class="tag">服务型政府</span></div></div>
-        <div class="mat-card"><h4>"换位跑一次"</h4><p>领导干部体验式调研，站在群众角度解决问题。</p><div class="tags"><span class="tag">转变政绩观</span><span class="tag">作风建设</span></div></div>
-      </div>
-      <div class="card">
-        <h3>⚙ 新质生产力 & 经济发展</h3>
-        <div class="mat-card"><h4>江苏"1650"产业体系</h4><p>16个先进制造业集群，50条重点产业链。</p><div class="tags"><span class="tag">产业转型</span><span class="tag">高质量发展</span></div></div>
-        <div class="mat-card"><h4>智改数转网联</h4><p>智能化改造、数字化转型、网络化联接。</p><div class="tags"><span class="tag">新质生产力</span><span class="tag">数字经济</span></div></div>
-      </div>
+
+      <!-- 素材库 -->
+      <div id="materialLibrary"></div>
+
+      <!-- 我的素材笔记 -->
       <div class="card">
         <h3>✏️ 我的素材笔记</h3>
         <div id="shenlunNotes"></div>
@@ -686,12 +445,12 @@
       </div>
     </div>
 
-    <!-- ==================== PAGE: SPORT ==================== -->
+    <!-- PAGE: SPORT -->
     <div class="page" id="page-sport">
       <div class="section-title">🏃 运动目标</div>
       <div class="day-chips" id="spDayChips"></div>
       <div class="card"><h3>🎯 今日运动</h3><table class="mini">
-        <tr><td>项目</td><td><input placeholder="跑步/跳绳/健身..." data-field="sport_type"></td></tr>
+        <tr><td>项目</td><td><input placeholder="跑步/跳绳/健身/散步..." data-field="sport_type"></td></tr>
         <tr><td>时长</td><td><input placeholder="分钟..." data-field="sport_duration"></td></tr>
         <tr><td>热量</td><td><input placeholder="大卡（可选）..." data-field="sport_calories"></td></tr>
         <tr><td>感受</td><td><input placeholder="状态如何..." data-field="sport_feel"></td></tr>
@@ -704,7 +463,7 @@
       </div>
     </div>
 
-    <!-- ==================== PAGE: DIARY ==================== -->
+    <!-- PAGE: DIARY -->
     <div class="page" id="page-diary">
       <div class="section-title">🐶 养狗日记</div>
       <div class="day-chips" id="dyDayChips"></div>
@@ -716,10 +475,7 @@
             <span class="pdel" onclick="event.stopPropagation();deletePhoto('taozi')">✕</span>
           </div>
           <input type="file" id="taoziPhotoInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoUpload('taozi', this)">
-          <div class="pet-info">
-            <div class="pname">今日大事记</div>
-            <textarea placeholder="记录桃子今天的重要事情..." data-field="taozi_events"></textarea>
-          </div>
+          <div class="pet-info"><div class="pname">今日大事记</div><textarea placeholder="记录桃子今天的重要事情..." data-field="taozi_events"></textarea></div>
         </div>
       </div>
       <div class="card">
@@ -730,10 +486,7 @@
             <span class="pdel" onclick="event.stopPropagation();deletePhoto('yezi')">✕</span>
           </div>
           <input type="file" id="yeziPhotoInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoUpload('yezi', this)">
-          <div class="pet-info">
-            <div class="pname">今日大事记</div>
-            <textarea placeholder="记录椰子今天的重要事情..." data-field="yezi_events"></textarea>
-          </div>
+          <div class="pet-info"><div class="pname">今日大事记</div><textarea placeholder="记录椰子今天的重要事情..." data-field="yezi_events"></textarea></div>
         </div>
       </div>
       <div class="card">
@@ -744,7 +497,6 @@
     </div>
   </div>
 
-  <!-- Bottom Nav -->
   <nav class="bottom-nav">
     <button class="nav-btn active" data-page="success"><span class="nav-icon">⭐</span>成功日记</button>
     <button class="nav-btn" data-page="xingce"><span class="nav-icon">📖</span>行测刷题</button>
@@ -754,32 +506,26 @@
     <button class="nav-btn" data-page="diary"><span class="nav-icon">🐶</span>养狗</button>
   </nav>
 
-  <!-- Toast -->
   <div class="toast" id="toast"></div>
 
   <script>
-    // ===== CONSTANTS =====
     const today = new Date();
     const weekDays = ['周日','周一','周二','周三','周四','周五','周六'];
     const todayKey = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
     let currentDay = todayKey;
     let currentPage = 'success';
+    let currentCat = 'all';
 
-    // ===== CLOCK =====
     function updateClock() {
       const now = new Date();
-      document.getElementById('liveClock').textContent = 
-        `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
-      document.getElementById('liveDate').textContent = 
-        `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${weekDays[now.getDay()]}`;
-      // Greeting
+      document.getElementById('liveClock').textContent = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+      document.getElementById('liveDate').textContent = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${weekDays[now.getDay()]}`;
       const h = now.getHours();
       const g = h < 6 ? '夜深了' : h < 9 ? '早上好' : h < 12 ? '上午好' : h < 14 ? '中午好' : h < 18 ? '下午好' : h < 22 ? '晚上好' : '夜深了';
       document.getElementById('greetingText').innerHTML = `${g}，<strong>追光者</strong> 👋`;
     }
     updateClock(); setInterval(updateClock, 1000);
 
-    // ===== MOTTO =====
     const mottos = [
       { icon: '💪', text: '每一天的努力，都是上岸的阶梯。' },
       { icon: '🔥', text: '熬过无人问津的日子，才有诗和远方。' },
@@ -793,7 +539,7 @@
       { icon: '🌊', text: '长风破浪会有时，直挂云帆济沧海。' },
       { icon: '⛰', text: '会当凌绝顶，一览众山小。' },
       { icon: '💎', text: '宝剑锋从磨砺出，梅花香自苦寒来。' },
-      { icon: '🚀', text: '今天的每一份付出，��在为未来铺路。' },
+      { icon: '🚀', text: '今天的每一份付出，都在为未来铺路。' },
       { icon: '🎓', text: '将来的你，一定会感谢现在拼命的自己。' },
       { icon: '🐢', text: '慢一点没关系，只要不停下脚步。' },
       { icon: '🌙', text: '披星戴月的路，终会繁花满地。' },
@@ -809,10 +555,168 @@
     }
     updateMotto();
 
-    // ===== DATA =====
     const STORAGE_KEY = 'road_app_data';
     let appData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
     function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
+
+    // ===== 申论素材库 =====
+    const shenlunMaterials = [
+      {
+        category: '生态',
+        title: '太湖综合治理',
+        summary: '江苏太湖流域多年治理，水质显著改善，全国湖泊治理典范。',
+        background: '太湖是长三角重要生态屏障。2007年蓝藻危机后，江苏持续十多年投入治理，实施"控源截污、生态修复、调水引流、科学治太"综合措施，太湖水质从劣Ⅴ类改善为Ⅲ类，蓝藻水华得到有效控制。',
+        usage: '适用于"绿色发展""生态文明建设""人与自然和谐共生""系统治理""久久为功"等主题。可论证生态保护需长期坚持、综合治理、科技支撑。',
+        quote: '绿水青山就是金山银山。太湖治理证明，生态保护与经济发展并非对立，而是可以相互促进、相得益彰。',
+        tags: ['绿色发展', '流域治理', '生态修复', '江苏案例']
+      },
+      {
+        category: '生态',
+        title: '长江十年禁渔',
+        summary: '江苏段禁渔成效显著，江豚重现，生物多样性恢复。',
+        background: '长江是中华民族的母亲河。2021年起长江干流及重要支流实行为期十年的禁渔。江苏段累计退捕渔船1.9万艘、渔民4.2万人，建立退捕渔民社会保障体系，江豚种群数量明显回升。',
+        usage: '适用于"生态文明建设""人与自然和谐共生""长江大保护""生物多样性"等主题。可写为：长江禁渔不仅是生态修复工程，更是为子孙后代谋长远的民生工程。',
+        quote: '长江禁渔，禁的是眼前的捕捞，护的是子孙后代的渔猎之源、生态之基。',
+        tags: ['人与自然和谐共生', '生态修复', '长江大保护']
+      },
+      {
+        category: '生态',
+        title: '幸福河湖建设',
+        summary: '江苏全域推进，水生态治理与民生改善结合。',
+        background: '江苏在全国率先开展幸福河湖建设，通过河道综合整治、岸坡绿化、亲水空间打造，让河湖成为群众休闲健身的好去处。目前已建成幸福河湖超3000条，逐步形成"河安湖晏、水清岸绿、鱼翔浅底、文昌人和"的美好景象。',
+        usage: '适用于"生态惠民""美丽中国""城市更新""民生改善"等主题。幸福河湖建设体现了生态环境治理以人民为中心的发展思想。',
+        quote: '良好的生态环境是最普惠的民生福祉。幸福河湖让群众在家门口就能感受到生态改善带来的获得感。',
+        tags: ['生态惠民', '美丽江苏', '民生实事']
+      },
+      {
+        category: '治理',
+        title: '12345热线改革',
+        summary: '"一企来""一号答"，群众诉求接得更快办得更实。',
+        background: '江苏12345热线是全国政务服务便民热线改革的先行者。2020年推出"一企来"企业服务专席，2022年建设"热线百科"，实现群众诉求"接得更快、分得更准、办得更实"。江苏12345年均受理诉求超3000万件，群众满意率保持在95%以上。',
+        usage: '适用于"为民办实事""服务型政府""基层治理创新""优化营商环境"等主题。可作为论证政府数字化转型、提升治理效能的典型案例。',
+        quote: '一条热线，连接的是民心，检验的是作风，体现的是党和政府以人民为中心的发展思想。',
+        tags: ['为民办实事', '服务型政府', '基层治理']
+      },
+      {
+        category: '治理',
+        title: '"换位跑一次"',
+        summary: '领导干部体验式调研，站在群众角度解决问题。',
+        background: '江苏省推行领导干部"换位跑一次"活动，要求各级干部以普通群众身份到政务大厅、基层窗口办事，亲身体验群众办事流程，查找堵点痛点。通过换位体验，推动解决了大量审批流程繁琐、办事材料重复提交等问题。',
+        usage: '适用于"转变工作作风""服务型政府""基层调研""群众路线""放管服改革"等主题。体现了刀刃向内、自我革命的改革精神。',
+        quote: '坐在办公室碰到的都是问题，深入基层看到的全是办法。换位跑一次，让干部更能读懂群众的急难愁盼。',
+        tags: ['转变政绩观', '作风建设', '基层调研']
+      },
+      {
+        category: '治理',
+        title: '小区瓶改管 / 家门口就业服务站',
+        summary: '消除安全隐患，打通就业服务"最后一公里"。',
+        background: '江苏多地推进老旧小区燃气"瓶改管"工程，将瓶装液化气改造为管道天然气，大幅降低安全风险。同时建设"家门口"就业服务站，把岗位信息、职业培训、政策咨询送到居民身边，实现就业服务"零距离"。',
+        usage: '适用于"民生实事""基层矛盾化解""稳就业""社区治理""安全生产"等主题。可论证基层治理要从群众最关心的小事抓起。',
+        quote: '民生无小事，枝叶总关情。从"瓶改管"到"家门口就业"，江苏把一件件民生实事办到了群众心坎上。',
+        tags: ['民生实事', '稳就业', '社区治理']
+      },
+      {
+        category: '经济',
+        title: '江苏"1650"产业体系',
+        summary: '16个先进制造业集群，50条重点产业链。',
+        background: '江苏提出建设"1650"产业体系，即16个先进制造业集群、50条重点产业链，涵盖集成电路、生物医药、新能源、高端装备等领域。通过"链长制"推进强链补链延链，江苏制造业增加值连续多年全国第一。',
+        usage: '适用于"产业转型""高质量发展""制造强省""科技创新""新质生产力"等主题。可论证构建现代化产业体系是推动经济高质量发展的关键抓手。',
+        quote: '制造业是江苏的深厚家底，"1650"产业体系是江苏迈向制造强省新征程上的战略抓手。',
+        tags: ['产业转型', '高质量发展', '制造强省']
+      },
+      {
+        category: '经济',
+        title: '智改数转网联',
+        summary: '智能化改造、数字化转型、网络化联接。',
+        background: '江苏率先实施制造业"智改数转网联"行动，通过政府购买服务、标杆示范、金融支持等方式，推动企业开展智能化改造和数字化转型。目前全省两化融合发展水平连续八年全国第一，数字经济规模超5万亿元。',
+        usage: '适用于"新质生产力""数字经济""科技创新""产业转型升级""高质量发展"等主题。可作为传统产业数字化转型、培育新动能的案例。',
+        quote: '数字化转型不是选择题，而是必答题。江苏用"智改数转网联"为制造业插上数字翅膀。',
+        tags: ['新质生产力', '数字经济', '科技创新']
+      },
+      {
+        category: '经济',
+        title: '苏州生物医药产业',
+        summary: '苏州工业园区集聚超2000家生物医药企业。',
+        background: '苏州生物医药产业园（BioBAY）集聚生物医药企业超2000家，拥有信达生物、基石药业等龙头企业，在创新药研发、高端医疗器械等领域形成完整产业链，被誉为"中国药谷"，产业综合竞争力居全国前列。',
+        usage: '适用于"科技自立自强""产业创新""新质生产力""创新驱动发展"等主题。可论证关键核心技术攻关和产业集群发展的重要性。',
+        quote: '从"跟跑"到"并跑"再到"领跑"，苏州生物医药产业的崛起，是中国科技自立自强的一个缩影。',
+        tags: ['科技自立自强', '产业创新', '新质生产力']
+      },
+      {
+        category: '文化',
+        title: '扬州中国大运河博物馆',
+        summary: '大运河文化带建设标志性项目。',
+        background: '扬州中国大运河博物馆是国家一级博物馆，也是大运河文化带建设标志性工程。博物馆通过数字化展陈、沉浸式体验等方式，生动展现大运河千年历史文脉，开馆以来累计接待游客超千万人次，成为文旅融合新地标。',
+        usage: '适用于"文化自信""文旅融合""文化遗产保护""文化传承发展"等主题。可论证文化遗产保护要与时代结合、与群众需求结合。',
+        quote: '大运河是祖先留给我们的宝贵遗产。保护好、传承好、利用好大运河文化，是新时代赋予我们的历史责任。',
+        tags: ['文化自信', '文旅融合', '遗产保护']
+      },
+      {
+        category: '文化',
+        title: '江苏"新农人"培育计划',
+        summary: '吸引青年人才返乡创业，推动乡村全面振兴。',
+        background: '江苏实施"新农人"培育三年行动计划，通过政策扶持、创业培训、金融支持等方式，吸引大学生、退伍军人、返乡农民工等群体投身现代农业。全省已培育高素质农民超200万人，带动农村电商、乡村旅游、农产品加工等新业态蓬勃发展。',
+        usage: '适用于"乡村振兴""人才战略""青年发展""共同富裕""农业现代化"等主题。可论证乡村振兴关键在人，要培养造就一支懂农业、爱农村、爱农民的"三农"工作队伍。',
+        quote: '乡村振兴，人才先行。让年轻人愿意回到乡村、扎根乡村，乡村才有未来，农业才有希望。',
+        tags: ['乡村振兴', '人才战略', '青年发展']
+      },
+      {
+        category: '治理',
+        title: '"最多跑一次"改革',
+        summary: '江苏政务服务"一网通办"，让群众少跑腿。',
+        background: '江苏深入推进"放管服"改革，打造"不见面审批"品牌，建成全省一体化政务服务平台，实现政务服务"一网通办""跨省通办"。企业开办时间压缩至0.5个工作日，"最多跑一次"事项占比超过95%。',
+        usage: '适用于"服务型政府""优化营商环境""数字政府""基层治理创新"等主题。可论证政务服务改革要坚持以人民为中心，从群众需求出发。',
+        quote: '数据多跑路，群众少跑腿。"最多跑一次"背后，是政府服务理念的根本转变。',
+        tags: ['服务型政府', '优化营商环境', '数字政府']
+      }
+    ];
+
+    function renderDailyMaterial() {
+      const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+      const m = shenlunMaterials[dayOfYear % shenlunMaterials.length];
+      document.getElementById('dailyCategory').textContent = m.category;
+      document.getElementById('dailyTitle').textContent = m.title;
+      document.getElementById('dailyBackground').textContent = m.background;
+      document.getElementById('dailyUsage').textContent = m.usage;
+      document.getElementById('dailyQuote').textContent = '"' + m.quote + '"';
+    }
+
+    function renderMaterialLibrary() {
+      const lib = document.getElementById('materialLibrary');
+      const filtered = currentCat === 'all' ? shenlunMaterials : shenlunMaterials.filter(m => m.category === currentCat);
+      lib.innerHTML = filtered.map((m, i) => `
+        <div class="material-card" onclick="toggleMaterial(this)">
+          <div class="mc-header">
+            <div>
+              <div class="mc-title">${escapeHtml(m.title)}</div>
+              <div class="mc-summary">${escapeHtml(m.summary)}</div>
+            </div>
+            <span class="mc-arrow">▼</span>
+          </div>
+          <div class="mc-detail">
+            <div class="mc-content">
+              <div class="mc-section"><h5>📖 案例背景</h5><p>${escapeHtml(m.background)}</p></div>
+              <div class="mc-section"><h5>✍️ 答题话术</h5><p>${escapeHtml(m.usage)}</p></div>
+              <div class="mc-quote">${escapeHtml(m.quote)}</div>
+              <div class="tags">${m.tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleMaterial(card) {
+      card.classList.toggle('expanded');
+    }
+
+    document.getElementById('categoryTabs').addEventListener('click', function(e) {
+      const tab = e.target.closest('.cat-tab');
+      if (!tab) return;
+      document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentCat = tab.dataset.cat;
+      renderMaterialLibrary();
+    });
 
     // ===== DAY CHIPS =====
     function buildDays() {
@@ -829,57 +733,42 @@
       return days;
     }
     const dayNames = buildDays();
-
     function renderDayChips(containerId) {
       const el = document.getElementById(containerId);
       if (!el) return;
-      el.innerHTML = dayNames.map(d =>
-        `<button class="day-chip${d.key===currentDay?' active':''}" onclick="switchDay('${d.key}')">${d.date}<br><span style="font-size:9px;font-weight:400;">${d.weekday}</span></button>`
-      ).join('');
+      el.innerHTML = dayNames.map(d => `<button class="day-chip${d.key===currentDay?' active':''}" onclick="switchDay('${d.key}')">${d.date}<br><span style="font-size:9px;font-weight:400;">${d.weekday}</span></button>`).join('');
     }
-
     function switchDay(key) {
       currentDay = key;
-      renderDayChips('xcDayChips');
-      renderDayChips('spDayChips');
-      renderDayChips('dyDayChips');
+      renderDayChips('xcDayChips'); renderDayChips('spDayChips'); renderDayChips('dyDayChips');
       loadDayData();
     }
-
     function loadDayData() {
       const dd = appData[currentDay] || {};
       document.querySelectorAll('[data-field]').forEach(el => {
-        if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') {
-          el.value = dd[el.dataset.field] || '';
-        }
+        if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') el.value = dd[el.dataset.field] || '';
       });
-      loadPhoto('taozi', dd.taozi_photo);
-      loadPhoto('yezi', dd.yezi_photo);
+      loadPhoto('taozi', dd.taozi_photo); loadPhoto('yezi', dd.yezi_photo);
       updateSuccessUI();
     }
 
-    // ===== AUTO SAVE =====
     let saveTimeout;
     document.addEventListener('input', function(e) {
       if (!e.target.dataset.field) return;
       if (!appData[currentDay]) appData[currentDay] = {};
       appData[currentDay][e.target.dataset.field] = e.target.value;
       save();
-      // Show save indicator for success input
       if (e.target.id === 'successInput') {
         const ind = document.getElementById('saveIndicator');
         ind.classList.add('show');
-        const input = e.target;
-        if (input.value.trim()) input.classList.add('has-content');
-        else input.classList.remove('has-content');
+        e.target.classList.toggle('has-content', !!e.target.value.trim());
         clearTimeout(saveTimeout);
         saveTimeout = setTimeout(() => { ind.classList.remove('show'); updateSuccessUI(); }, 800);
       }
     });
 
-    // ===== SUCCESS DIARY =====
+    // ===== SUCCESS =====
     function updateSuccessUI() {
-      // Streak
       const entries = [];
       for (const [key, dd] of Object.entries(appData)) {
         if (key.match(/^\d{4}-\d{2}-\d{2}$/) && dd.success_today && dd.success_today.trim()) {
@@ -887,37 +776,19 @@
         }
       }
       entries.sort((a, b) => b.date.localeCompare(a.date));
-
       let streak = 0;
       const cd = new Date(today);
       for (let i = 0; i < 365; i++) {
         const dk = `${cd.getFullYear()}-${String(cd.getMonth()+1).padStart(2,'0')}-${String(cd.getDate()).padStart(2,'0')}`;
-        if ((appData[dk] || {}).success_today && appData[dk].success_today.trim()) {
-          streak++;
-          cd.setDate(cd.getDate() - 1);
-        } else break;
+        if ((appData[dk] || {}).success_today && appData[dk].success_today.trim()) { streak++; cd.setDate(cd.getDate() - 1); }
+        else break;
       }
-
       document.getElementById('streakCount').textContent = streak;
       document.getElementById('totalSuccess').textContent = `共 ${entries.length} 条`;
-      const msg = document.getElementById('streakMsg');
-      if (streak >= 30) msg.textContent = '🏆 一个月不间断！你已经是自律达人了！';
-      else if (streak >= 14) msg.textContent = '🌟 两周了！这个习惯已经深深扎根！';
-      else if (streak >= 7) msg.textContent = '🔥 连续一周！你正在成为更好的自己！';
-      else if (streak >= 3) msg.textContent = '💪 好的开始！继续保持这个节奏！';
-      else if (streak >= 1) msg.textContent = '🌱 迈出了第一步，坚持下去！';
-      else msg.textContent = '从今天开始，记录你的每一次成功 ✨';
-
-      // Today input
-      const todayData = appData[todayKey] || {};
       const input = document.getElementById('successInput');
-      if (input.value !== (todayData.success_today || '')) {
-        input.value = todayData.success_today || '';
-      }
-      if (input.value.trim()) input.classList.add('has-content');
-      else input.classList.remove('has-content');
-
-      // Timeline
+      const td = appData[todayKey] || {};
+      input.value = td.success_today || '';
+      input.classList.toggle('has-content', !!input.value.trim());
       const tl = document.getElementById('successTimeline');
       if (entries.length === 0) {
         tl.innerHTML = '<div class="empty-state"><div class="empty-icon">✨</div><p>每一天的成功都值得被铭记</p><p style="font-size:11px;margin-top:4px;">写下今天的第一条吧</p></div>';
@@ -925,48 +796,34 @@
       }
       tl.innerHTML = entries.map(e => {
         const d = new Date(e.date + 'T00:00:00');
-        return `<div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="tl-date">${d.getMonth()+1}/${d.getDate()} ${weekDays[d.getDay()]}</div>
-          <div class="tl-content">${escapeHtml(e.content)}</div>
-          <span class="tl-delete" onclick="deleteSuccess('${e.date}')">🗑</span>
-        </div>`;
+        return `<div class="timeline-item"><div class="timeline-dot"></div><div class="tl-date">${d.getMonth()+1}/${d.getDate()} ${weekDays[d.getDay()]}</div><div class="tl-content">${escapeHtml(e.content)}</div><span class="tl-delete" onclick="deleteSuccess('${e.date}')">🗑</span></div>`;
       }).join('');
     }
-
     function fillPrompt(text) {
       const input = document.getElementById('successInput');
       const current = input.value.trim();
       input.value = current ? current + '\n' + text : text;
-      input.focus();
       input.dispatchEvent(new Event('input', { bubbles: true }));
     }
-
     function deleteSuccess(dateKey) {
       if (!appData[dateKey]) return;
       delete appData[dateKey].success_today;
-      save();
-      if (dateKey === todayKey) {
-        document.getElementById('successInput').value = '';
-        document.getElementById('successInput').classList.remove('has-content');
-      }
-      updateSuccessUI();
-      showToast('🗑 已删除');
+      save(); updateSuccessUI(); showToast('🗑 已删除');
     }
 
-    // ===== PAGES =====
+    // ===== NAV =====
     document.querySelector('.bottom-nav').addEventListener('click', function(e) {
       const btn = e.target.closest('.nav-btn');
       if (!btn) return;
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentPage = btn.dataset.page;
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('page-' + currentPage).classList.add('active');
+      document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + currentPage));
       if (currentPage === 'xingce') renderDayChips('xcDayChips');
       if (currentPage === 'sport') { renderDayChips('spDayChips'); renderSportSummary(); }
       if (currentPage === 'diary') renderDayChips('dyDayChips');
       if (currentPage === 'success') updateSuccessUI();
+      if (currentPage === 'shenlun') { renderDailyMaterial(); renderMaterialLibrary(); }
     });
 
     // ===== NEWS =====
@@ -976,17 +833,15 @@
           <div class="info-item"><div class="dot"></div><div class="info-content">2026年中央一号文件聚焦乡村全面振兴<div class="meta">乡村振兴 · 高频考点</div></div></div>
           <div class="info-item"><div class="dot"></div><div class="info-content">新质生产力成为2026年经济发展核心关键词<div class="meta">经济发展 · 必考热点</div></div></div>
           <div class="info-item"><div class="dot"></div><div class="info-content">国务院发布《数字中国建设整体布局规划》实施方案<div class="meta">数字经济 · 科技创新</div></div></div>
-          <div class="info-item"><div class="dot"></div><div class="info-content">全国生态环境保护大会：建设人与自然和谐共生的现代化<div class="meta">生态环保 · 重要论述</div></div></div>
-          <div class="info-item"><div class="dot"></div><div class="info-content">2026年城镇新增就业目标1200万人以上<div class="meta">民生保障 · 数据要点</div></div></div>
-        `;
+          <div class="info-item"><div class="dot"></div><div class="info-content">全国生态环境保护大会强调建设人与自然和谐共生的现代化<div class="meta">生态环保 · 重要论述</div></div></div>
+          <div class="info-item"><div class="dot"></div><div class="info-content">2026年城镇新增就业目标1200万人以上<div class="meta">民生保障 · 数据要点</div></div></div>`;
       } else {
         document.getElementById('jiangsuNews').innerHTML = `
           <div class="info-item"><div class="dot"></div><div class="info-content">江苏省2026年GDP目标增长5.5%以上<div class="meta">省情数据 · 江苏特色</div></div></div>
           <div class="info-item"><div class="dot"></div><div class="info-content">"1650"产业体系2.0版，新增氢能、低空经济<div class="meta">新质生产力 · 江苏实践</div></div></div>
           <div class="info-item"><div class="dot"></div><div class="info-content">苏州、南京入选全国首批便民生活圈示范城市<div class="meta">民生服务 · 基层治理</div></div></div>
           <div class="info-item"><div class="dot"></div><div class="info-content">江苏省考2026年招录规模扩大，基层岗位超60%<div class="meta">公考动态 · 重点关注</div></div></div>
-          <div class="info-item"><div class="dot"></div><div class="info-content">太湖流域水质创近十年最好水平<div class="meta">生态环保 · 江苏案例</div></div></div>
-        `;
+          <div class="info-item"><div class="dot"></div><div class="info-content">太湖流域水质创近十年最好水平<div class="meta">生态环保 · 江苏案例</div></div></div>`;
       }
       showToast('✅ 已更新');
     }
@@ -994,9 +849,7 @@
     // ===== NOTES =====
     function renderShizhengNotes() {
       const notes = appData.shizheng_notes || [];
-      document.getElementById('shizhengNotes').innerHTML = notes.map((n,i) =>
-        `<div class="info-item"><div class="dot"></div><div class="info-content">${escapeHtml(n.content)}<div class="meta">${escapeHtml(n.date)}</div></div><span style="color:var(--text3);font-size:10px;cursor:pointer;flex-shrink:0;" onclick="delItem('shizheng_notes',${i})">✕</span></div>`
-      ).join('') || '<div style="color:var(--text3);font-size:11px;padding:6px 0;">暂无笔记</div>';
+      document.getElementById('shizhengNotes').innerHTML = notes.map((n,i) => `<div class="info-item"><div class="dot"></div><div class="info-content">${escapeHtml(n.content)}<div class="meta">${escapeHtml(n.date)}</div></div><span style="color:var(--text3);font-size:10px;cursor:pointer;flex-shrink:0;" onclick="delItem('shizheng_notes',${i})">✕</span></div>`).join('') || '<div style="color:var(--text3);font-size:11px;padding:6px 0;">暂无笔记</div>';
     }
     function addShizhengNote() {
       const c = prompt('输入时政笔记：'); if (!c) return;
@@ -1004,16 +857,13 @@
       appData.shizheng_notes.push({ content: c, date: `${today.getMonth()+1}/${today.getDate()}` });
       save(); renderShizhengNotes(); showToast('✅ 已添加');
     }
-
     function renderShenlunNotes() {
       const notes = appData.shenlun_notes || [];
-      document.getElementById('shenlunNotes').innerHTML = notes.map((n,i) =>
-        `<div class="mat-card"><h4>${escapeHtml(n.title)} <span style="font-weight:400;font-size:10px;color:var(--text3);">${escapeHtml(n.category)}</span></h4><p>${escapeHtml(n.content)}</p><span style="color:var(--text3);font-size:10px;cursor:pointer;float:right;" onclick="delItem('shenlun_notes',${i})">✕</span><div style="clear:both"></div></div>`
-      ).join('') || '<div style="color:var(--text3);font-size:11px;padding:6px 0;">暂无素材笔记</div>';
+      document.getElementById('shenlunNotes').innerHTML = notes.map((n,i) => `<div class="material-card"><div class="mc-title">${escapeHtml(n.title)} <span style="font-weight:400;font-size:10px;color:var(--text3);">${escapeHtml(n.category)}</span></div><div class="mc-summary">${escapeHtml(n.content)}</div><span style="color:var(--text3);font-size:10px;cursor:pointer;float:right;" onclick="event.stopPropagation();delItem('shenlun_notes',${i})">✕</span><div style="clear:both"></div></div>`).join('') || '<div style="color:var(--text3);font-size:11px;padding:6px 0;">暂无素材笔记</div>';
     }
     function addShenlunNote() {
       const title = prompt('素材标题：'); if (!title) return;
-      const category = prompt('类别（生态环保/基层治理/经济发展/文化建设）：');
+      const category = prompt('类别（生态/治理/经济/文化）：');
       const content = prompt('内容：'); if (!content) return;
       if (!appData.shenlun_notes) appData.shenlun_notes = [];
       appData.shenlun_notes.push({ title, category: category||'未分类', content });
@@ -1025,8 +875,7 @@
       const s = document.getElementById('sportWeekSummary');
       const sportDays = dayNames.map(d => appData[d.key] || {}).filter(d => d.sport_type && d.sport_type.trim());
       if (!sportDays.length) { s.innerHTML = '本周暂无运动记录，加油！'; return; }
-      let total = 0;
-      sportDays.forEach(d => { total += parseInt(d.sport_duration) || 0; });
+      let total = 0; sportDays.forEach(d => { total += parseInt(d.sport_duration) || 0; });
       s.innerHTML = `🏃 运动 <strong>${sportDays.length}/7</strong> 天 · ⏱ 总时长 <strong>${total}</strong> 分钟 · 📊 日均 <strong>${Math.round(total/7)}</strong> 分钟`;
     }
 
@@ -1045,12 +894,9 @@
     function loadPhoto(pet, dataUrl) {
       const box = document.getElementById(pet + 'Photo');
       if (!box) return;
-      const img = box.querySelector('img');
-      if (img) img.remove();
-      if (dataUrl) {
-        const ni = document.createElement('img');
-        ni.src = dataUrl; box.appendChild(ni); box.classList.add('has-photo');
-      } else { box.classList.remove('has-photo'); }
+      const img = box.querySelector('img'); if (img) img.remove();
+      if (dataUrl) { const ni = document.createElement('img'); ni.src = dataUrl; box.appendChild(ni); box.classList.add('has-photo'); }
+      else box.classList.remove('has-photo');
     }
     function deletePhoto(pet) {
       if (!appData[currentDay]) return;
@@ -1061,9 +907,7 @@
     // ===== PET ARCHIVE =====
     function renderPetArchive() {
       const a = appData.pet_archive || [];
-      document.getElementById('petArchive').innerHTML = a.map((r,i) =>
-        `<div class="info-item"><div class="dot"></div><div class="info-content"><strong>${escapeHtml(r.pet)}</strong> · ${escapeHtml(r.project)}<div class="meta">${escapeHtml(r.date)} — ${escapeHtml(r.detail)}</div></div><span style="color:var(--text3);font-size:10px;cursor:pointer;flex-shrink:0;" onclick="delItem('pet_archive',${i})">✕</span></div>`
-      ).join('') || '<div style="color:var(--text3);font-size:11px;padding:6px 0;">暂无档案记录</div>';
+      document.getElementById('petArchive').innerHTML = a.map((r,i) => `<div class="info-item"><div class="dot"></div><div class="info-content"><strong>${escapeHtml(r.pet)}</strong> · ${escapeHtml(r.project)}<div class="meta">${escapeHtml(r.date)} — ${escapeHtml(r.detail)}</div></div><span style="color:var(--text3);font-size:10px;cursor:pointer;flex-shrink:0;" onclick="delItem('pet_archive',${i})">✕</span></div>`).join('') || '<div style="color:var(--text3);font-size:11px;padding:6px 0;">暂无档案记录</div>';
     }
     function addPetArchive() {
       const pet = prompt('宠物（桃子/椰子）：'); if (!pet) return;
@@ -1075,28 +919,18 @@
       save(); renderPetArchive(); showToast('✅ 已添加');
     }
 
-    // ===== HELPERS =====
     function delItem(key, i) { if (!appData[key]) return; appData[key].splice(i,1); save(); refreshAll(); }
     function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
     function showToast(m) { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
-
-    function refreshAll() {
-      renderShizhengNotes(); renderShenlunNotes(); renderPetArchive(); renderSportSummary();
-    }
+    function refreshAll() { renderShizhengNotes(); renderShenlunNotes(); renderPetArchive(); renderSportSummary(); }
 
     // ===== INIT =====
-    renderDayChips('xcDayChips');
-    renderDayChips('spDayChips');
-    renderDayChips('dyDayChips');
+    renderDayChips('xcDayChips'); renderDayChips('spDayChips'); renderDayChips('dyDayChips');
     loadDayData();
+    renderDailyMaterial();
+    renderMaterialLibrary();
     refreshAll();
     updateSuccessUI();
-
-    // ===== PWA =====
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault(); deferredPrompt = e;
-    });
   </script>
 </body>
 </html>
