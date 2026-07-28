@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="道路的前面还是道路">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0f0f23">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <title>道路的前面还是道路</title>
+  <style>
+    :root {
+      --bg: #0f0f23;
+      --surface: #1a1a2e;
+      --surface2: #16213e;
+      --text: #e4e4e7;
+      --text2: #a1a1aa;
+      --text3: #71717a;
+      --accent: #818cf8;
+      --accent2: #c084fc;
+      --gold: #fbbf24;
+      --gold2: #f59e0b;
+      --green: #34d399;
+      --red: #f87171;
+      --radius: 20px;
+      --radius-sm: 14px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      padding-bottom: 100px;
+    }
+    
+    /* Ambient background */
+    .ambient {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none; z-index: 0;
+    }
+    .ambient .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+    }
+    .orb-1 {
+      width: 200px; height: 200px;
+      background: var(--accent);
+      top: -40px; right: -40px;
+      animation: float1 8s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 160px; height: 160px;
+      background: var(--accent2);
+      bottom: 20%; left: -30px;
+      animation: float2 10s ease-in-out infinite;
+    }
+    .orb-3 {
+      width: 120px; height: 120px;
+      background: var(--gold);
+      top: 50%; right: 20%;
+      animation: float3 12s ease-in-out infinite;
+    }
+    @keyframes float1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(-20px,30px) scale(1.15); }
+    }
+    @keyframes float2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(20px,-20px) scale(1.1); }
+    }
+    @keyframes float3 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(-15px,-25px) scale(1.2); }
+    }
+
+    .container {
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 0 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== TOP HEADER ===== */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0 8px;
+    }
+    .top-bar .greeting {
+      font-size: 13px;
+      color: var(--text2);
+    }
+    .top-bar .greeting strong {
+      color: var(--text);
+      font-size: 14px;
+    }
+    .avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+
+    /* ===== HERO CLOCK ===== */
+    .hero-card {
+      background: linear-gradient(145deg, #1e1b4b, #312e81, #1e1b4b);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      margin: 8px 0 16px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(129,140,248,0.15);
+    }
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      top: -50%; right: -30%;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(192,132,252,0.15), transparent);
+      border-radius: 50%;
+    }
+    .hero-time {
+      font-size: 52px;
+      font-weight: 200;
+      letter-spacing: 3px;
+      font-variant-numeric: tabular-nums;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+      position: relative; z-index: 1;
+    }
+    .hero-date {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      margin-top: 2px;
+      position: relative; z-index: 1;
+    }
+    .hero-motto {
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      margin-top: 12px;
+      font-weight: 500;
+      position: relative; z-index: 1;
+      line-height: 1.6;
+    }
+
+    /* ===== STREAK BADGE ===== */
+    .streak-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(251,191,36,0.2);
+    }
+    .streak-fire {
+      font-size: 32px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+    .streak-info { flex: 1; }
+    .streak-count {
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .streak-label { font-size: 12px; color: var(--text2); margin-top: -2px; }
+    .streak-msg { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+    /* ===== TODAY'S SUCCESS ===== */
+    .today-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .today-card .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .today-card .card-subtitle {
+      font-size: 12px;
+      color: var(--text3);
+      margin-bottom: 14px;
+    }
+    .today-input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      resize: none;
+      min-height: 80px;
+      line-height: 1.7;
+      transition: border-color 0.3s;
+    }
+    .today-input:focus {
+      border-color: var(--accent);
+    }
+    .today-input::placeholder { color: var(--text3); }
+    .today-input.has-content {
+      border-color: rgba(52,211,153,0.3);
+      background: rgba(52,211,153,0.05);
+    }
+    .save-indicator {
+      font-size: 11px;
+      color: var(--green);
+      margin-top: 8px;
+      display: none;
+      align-items: center; gap: 4px;
+    }
+    .save-indicator.show { display: flex; }
+    .quick-prompts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .quick-prompt {
+      font-size: 11px;
+      padding: 5px 10px;
+      background: var(--surface2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quick-prompt:active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* ===== SUCCESS TIMELINE ===== */
+    .timeline-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255,255,255,0.04);
+      animation: fadeInUp 0.4s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -21px;
+      top: 18px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid var(--bg);
+    }
+    .timeline-item:nth-child(odd) .timeline-dot { background: var(--accent); }
+    .timeline-item:nth-child(even) .timeline-dot { background: var(--accent2); }
+    .timeline-item:nth-child(3n) .timeline-dot { background: var(--gold); }
+    .tl-date {
+      font-size: 11px;
+      color: var(--text3);
+      margin-bottom: 4px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .tl-content {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .tl-delete {
+      position: absolute;
+      top: 12px; right: 14px;
+      font-size: 14px;
+      color: var(--text3);
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .timeline-item:hover .tl-delete,
+    .timeline-item:active .tl-delete { opacity: 0.6; }
+
+    /* ===== NAV BAR (bottom) ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(26,26,46,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0 env(safe-area-inset-bottom, 8px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      z-index: 100;
+    }
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      color: var(--text3);
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 12px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .nav-btn .nav-icon { font-size: 20px; }
+    .nav-btn.active {
+      color: var(--accent);
+    }
+    .nav-btn.active::before {
+      content: '';
+      position: absolute;
+      top: -9px;
+      width: 20px; height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+    .nav-btn { position: relative; }
+
+    /* ===== PAGE SECTIONS ===== */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ===== MODULE CARDS ===== */
+    .section-title {
+      font-size: 15px; font-weight: 700;
+      margin: 0 0 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .card h3 {
+      font-size: 13px; font-weight: 700;
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    table.mini { width: 100%; border-collapse: collapse; font-size: 12px; }
+    table.mini td {
+      padding: 6px 2px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    table.mini td:first-child { width: 56px; font-weight: 600; color: var(--text2); font-size: 11px; }
+    table.mini input {
+      width: 100%; border: none; background: transparent;
+      font-size: 12px; color: var(--text);
+      font-family: inherit; outline: none; padding: 4px 0;
+    }
+    table.mini input::placeholder { color: var(--text3); }
+
+    .day-chips {
+      display: flex; gap: 4px; margin-bottom: 12px;
+      overflow-x: auto; padding-bottom: 2px;
+    }
+    .day-chips::-webkit-scrollbar { display: none; }
+    .day-chip {
+      flex: 0 0 auto;
+      padding: 6px 10px; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--surface2);
+      font-size: 11px; font-weight: 600; cursor: pointer;
+      color: var(--text2); font-family: inherit; white-space: nowrap;
+    }
+    .day-chip.active {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+    }
+
+    .info-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 11px;
+    }
+    .info-item:last-child { border-bottom: none; }
+    .info-item .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent); margin-top: 5px; flex-shrink: 0;
+    }
+    .info-item .meta { color: var(--text3); font-size: 10px; margin-top: 2px; }
+
+    .mat-card {
+      background: var(--surface2);
+      border-radius: var(--radius-sm);
+      padding: 12px; margin-bottom: 8px;
+      border-left: 3px solid var(--accent);
+    }
+    .mat-card h4 { font-size: 12px; font-weight: 700; margin-bottom: 3px; color: var(--accent); }
+    .mat-card p { font-size: 11px; color: var(--text2); line-height: 1.6; }
+    .mat-card .tags {
+      display: flex; flex-wrap: wrap; gap: 3px; margin-top: 6px;
+    }
+    .mat-card .tag {
+      font-size: 10px; padding: 2px 7px;
+      background: rgba(129,140,248,0.1);
+      border-radius: 6px; color: var(--accent);
+    }
+
+    .pet-row { display: flex; gap: 10px; align-items: flex-start; }
+    .pet-photo {
+      width: 80px; height: 80px;
+      border-radius: var(--radius-sm);
+      border: 2px dashed rgba(255,255,255,0.1);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      cursor: pointer; overflow: hidden; position: relative;
+      background: var(--surface2); flex-shrink: 0;
+      font-size: 9px; color: var(--text3); gap: 2px;
+    }
+    .pet-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      position: absolute; top: 0; left: 0;
+    }
+    .pet-photo .ph { font-size: 22px; }
+    .pet-photo .pl { font-size: 9px; color: var(--text3); position: relative; z-index: 1; }
+    .pet-photo.has-photo .ph,
+    .pet-photo.has-photo .pl { display: none; }
+    .pet-photo .pdel {
+      position: absolute; top: 3px; right: 3px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: rgba(0,0,0,0.6); color: #fff; font-size: 10px;
+      display: none; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 2;
+    }
+    .pet-photo.has-photo .pdel { display: flex; }
+    .pet-info { flex: 1; }
+    .pet-info .pname { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+    .pet-info textarea {
+      width: 100%; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 8px 10px;
+      font-size: 11px; font-family: inherit;
+      background: var(--surface2); color: var(--text);
+      outline: none; resize: none; min-height: 60px;
+    }
+    .pet-info textarea::placeholder { color: var(--text3); }
+
+    .add-btn {
+      width: 100%; padding: 10px;
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      background: transparent; color: var(--text3);
+      font-size: 12px; cursor: pointer;
+      font-family: inherit; margin-top: 6px;
+    }
+    .add-btn:active { border-color: var(--accent); color: var(--accent); }
+
+    .refresh-btn {
+      font-size: 10px; color: var(--accent);
+      background: rgba(129,140,248,0.1); border: none;
+      padding: 4px 10px; border-radius: 8px;
+      cursor: pointer; font-family: inherit; font-weight: 600;
+    }
+    .fw-item {
+      padding: 8px 10px; background: var(--surface2);
+      border-radius: 10px; margin-bottom: 5px; font-size: 11px;
+    }
+    .fw-item .fw-type { font-weight: 700; color: var(--accent); }
+    .fw-item .fw-desc { color: var(--text3); font-size: 10px; margin-top: 1px; }
+
+    .goal-row {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 11px;
+    }
+    .goal-row:last-child { border-bottom: none; }
+    .goal-row input {
+      flex: 1; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px; padding: 5px 8px;
+      font-size: 11px; font-family: inherit;
+      background: var(--surface2); color: var(--text); outline: none;
+    }
+    .goal-row input::placeholder { color: var(--text3); }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%);
+      background: var(--surface2); color: var(--text);
+      padding: 8px 18px; border-radius: 20px;
+      font-size: 12px; z-index: 200;
+      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .toast.show { opacity: 1; }
+
+    .empty-state {
+      text-align: center; padding: 30px 20px; color: var(--text3);
+    }
+    .empty-state .empty-icon { font-size: 40px; margin-bottom: 8px; }
+    .empty-state p { font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="ambient">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="container">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="greeting" id="greetingText">下午好，<strong>追光者</strong> 👋</div>
+      <div class="avatar">🛤</div>
+    </div>
+
+    <!-- Hero Clock -->
+    <div class="hero-card">
+      <div class="hero-time" id="liveClock">00:00:00</div>
+      <div class="hero-date" id="liveDate"></div>
+      <div class="hero-motto">
+        <span id="mottoIcon">💪</span> <span id="mottoText">每一天的努力，都是上岸的阶梯。</span>
+      </div>
+    </div>
+
+    <!-- ==================== PAGE: SUCCESS (Home) ==================== -->
+    <div class="page active" id="page-success">
+      <!-- Streak -->
+      <div class="streak-badge">
+        <span class="streak-fire">🔥</span>
+        <div class="streak-info">
+          <div class="streak-count" id="streakCount">0</div>
+          <div class="streak-label">天连续成功记录</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:11px;color:var(--text2);" id="totalSuccess">共 0 条</div>
+        </div>
+      </div>
+      <div class="streak-msg" style="margin-top:-8px;margin-bottom:16px;font-size:11px;color:var(--text3);text-align:center;" id="streakMsg">从今天开始，记录你的每一次成功 ✨</div>
+
+      <!-- Today's input -->
+      <div class="today-card">
+        <div class="card-title">⭐ 今天我做成的事</div>
+        <div class="card-subtitle">哪怕再小，也值得被记住</div>
+        <textarea class="today-input" id="successInput" placeholder="比如：今天坚持刷了50道行测题 / 早起成功 / 带桃子散步 / 读完一篇申论范文……" data-field="success_today"></textarea>
+        <div class="save-indicator" id="saveIndicator">✅ 已自动保存</div>
+        <div class="quick-prompts">
+          <span class="quick-prompt" onclick="fillPrompt('坚持完成了今日学习计划')">📚 完成学习</span>
+          <span class="quick-prompt" onclick="fillPrompt('今天运动了，感觉很好')">🏃 运动打卡</span>
+          <span class="quick-prompt" onclick="fillPrompt('早起成功，拥抱了新的一天')">🌅 早起成功</span>
+          <span class="quick-prompt" onclick="fillPrompt('认真陪了桃子和椰子')">🐶 陪狗狗</span>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="timeline-title">📜 成功记录</div>
+      <div class="timeline" id="successTimeline">
+        <div class="empty-state">
+          <div class="empty-icon">✨</div>
+          <p>每一天的成功都值得被铭记</p>
+          <p style="font-size:11px;margin-top:4px;">写下今天的第一条吧</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PAGE: XINGCE ==================== -->
+    <div class="page" id="page-xingce">
+      <div class="section-title">📖 行测刷题打卡</div>
+      <div class="day-chips" id="xcDayChips"></div>
+      <div class="card"><h3>📝 言语理解</h3><table class="mini">
+        <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="yy_volume"></td></tr>
+        <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="yy_accuracy"></td></tr>
+        <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="yy_wrong"></td></tr>
+        <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="yy_review"></td></tr>
+      </table></div>
+      <div class="card"><h3>🧩 判断推理</h3><table class="mini">
+        <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="pd_volume"></td></tr>
+        <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="pd_accuracy"></td></tr>
+        <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="pd_wrong"></td></tr>
+        <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="pd_review"></td></tr>
+      </table></div>
+      <div class="card"><h3>🔢 数量关系</h3><table class="mini">
+        <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="sl_volume"></td></tr>
+        <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="sl_accuracy"></td></tr>
+        <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="sl_wrong"></td></tr>
+        <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="sl_review"></td></tr>
+      </table></div>
+      <div class="card"><h3>📊 资料分析</h3><table class="mini">
+        <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="zl_volume"></td></tr>
+        <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="zl_accuracy"></td></tr>
+        <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="zl_wrong"></td></tr>
+        <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="zl_review"></td></tr>
+      </table></div>
+    </div>
+
+    <!-- ==================== PAGE: SHIZHENG ==================== -->
+    <div class="page" id="page-shizheng">
+      <div class="section-title">📰 时政推送</div>
+      <div class="card">
+        <h3>🇨🇳 全国考公时政热点 <button class="refresh-btn" style="margin-left:auto;" onclick="refreshNews('national')">🔄 刷新</button></h3>
+        <div id="nationalNews"><div style="color:var(--text3);font-size:11px;padding:6px 0;">点击刷新获取最新时政热点</div></div>
+      </div>
+      <div class="card">
+        <h3>🏛 江苏特色时政热点 <button class="refresh-btn" style="margin-left:auto;" onclick="refreshNews('jiangsu')">🔄 刷新</button></h3>
+        <div id="jiangsuNews"><div style="color:var(--text3);font-size:11px;padding:6px 0;">点击刷新获取江苏特色时政</div></div>
+      </div>
+      <div class="card">
+        <h3>📝 我的时政笔记</h3>
+        <div id="shizhengNotes"></div>
+        <button class="add-btn" onclick="addShizhengNote()">+ 添加笔记</button>
+      </div>
+    </div>
+
+    <!-- ==================== PAGE: SHENLUN ==================== -->
+    <div class="page" id="page-shenlun">
+      <div class="section-title">✍️ 申论素材积累</div>
+      <div class="card">
+        <h3>🛠 唐棣答题框架速查</h3>
+        <div class="fw-item"><div class="fw-type">📋 归纳概括</div><div class="fw-desc">总括句 + 分条列点（关键词前置，材料原文优先）</div></div>
+        <div class="fw-item"><div class="fw-type">🔍 综合分析</div><div class="fw-desc">释义/表态 → 多角度分析 → 总结对策</div></div>
+        <div class="fw-item"><div class="fw-type">💡 提出对策</div><div class="fw-desc">软手段（宣传引导）+ 硬手段（制度监管）</div></div>
+        <div class="fw-item"><div class="fw-type">📄 贯彻执行</div><div class="fw-desc">背景目的 → 主体内容 → 结尾呼吁</div></div>
+        <div class="fw-item"><div class="fw-type">✏️ 文章写作</div><div class="fw-desc">标题亮眼 → 开头破题 → 分论点递进 → 结尾升华</div></div>
+      </div>
+      <div class="card">
+        <h3>🌿 生态环境保护</h3>
+        <div class="mat-card"><h4>太湖综合治理</h4><p>江苏太湖流域多年治理，水质显著改善，全国湖泊治理典范。</p><div class="tags"><span class="tag">绿色发展</span><span class="tag">流域治理</span><span class="tag">生态修复</span></div></div>
+        <div class="mat-card"><h4>长江十年禁渔</h4><p>江苏段禁渔成效显著，江豚重现，生物多样性恢复。</p><div class="tags"><span class="tag">人与自然和谐共生</span><span class="tag">生态文明</span></div></div>
+        <div class="mat-card"><h4>幸福河湖建设</h4><p>江苏全域推进，水生态治理与民生改善结合。</p><div class="tags"><span class="tag">生态惠民</span><span class="tag">美丽江苏</span></div></div>
+      </div>
+      <div class="card">
+        <h3>🏘 基层治理 / 民生服务</h3>
+        <div class="mat-card"><h4>12345热线改革</h4><p>"一企来""一号答"，群众诉求接得更快办得更实。</p><div class="tags"><span class="tag">为民办实事</span><span class="tag">服务型政府</span></div></div>
+        <div class="mat-card"><h4>"换位跑一次"</h4><p>领导干部体验式调研，站在群众角度解决问题。</p><div class="tags"><span class="tag">转变政绩观</span><span class="tag">作风建设</span></div></div>
+      </div>
+      <div class="card">
+        <h3>⚙ 新质生产力 & 经济发展</h3>
+        <div class="mat-card"><h4>江苏"1650"产业体系</h4><p>16个先进制造业集群，50条重点产业链。</p><div class="tags"><span class="tag">产业转型</span><span class="tag">高质量发展</span></div></div>
+        <div class="mat-card"><h4>智改数转网联</h4><p>智能化改造、数字化转型、网络化联接。</p><div class="tags"><span class="tag">新质生产力</span><span class="tag">数字经济</span></div></div>
+      </div>
+      <div class="card">
+        <h3>✏️ 我的素材笔记</h3>
+        <div id="shenlunNotes"></div>
+        <button class="add-btn" onclick="addShenlunNote()">+ 添加素材</button>
+      </div>
+    </div>
+
+    <!-- ==================== PAGE: SPORT ==================== -->
+    <div class="page" id="page-sport">
+      <div class="section-title">🏃 运动目标</div>
+      <div class="day-chips" id="spDayChips"></div>
+      <div class="card"><h3>🎯 今日运动</h3><table class="mini">
+        <tr><td>项目</td><td><input placeholder="跑步/跳绳/健身..." data-field="sport_type"></td></tr>
+        <tr><td>时长</td><td><input placeholder="分钟..." data-field="sport_duration"></td></tr>
+        <tr><td>热量</td><td><input placeholder="大卡（可选）..." data-field="sport_calories"></td></tr>
+        <tr><td>感受</td><td><input placeholder="状态如何..." data-field="sport_feel"></td></tr>
+      </table></div>
+      <div class="card"><h3>📊 本周概览</h3><div id="sportWeekSummary" style="font-size:11px;color:var(--text2);"></div></div>
+      <div class="card"><h3>🎯 月度目标</h3>
+        <div class="goal-row">🏃 每周 ≥ 4 次<input placeholder="本周完成次数..." data-field="goal_weekly_count"></div>
+        <div class="goal-row">⏱ 每次 ≥ 30 分钟<input placeholder="平均时长..." data-field="goal_avg_duration"></div>
+        <div class="goal-row">💧 饮水 ≥ 1.5L<input placeholder="今日饮水量..." data-field="goal_water"></div>
+      </div>
+    </div>
+
+    <!-- ==================== PAGE: DIARY ==================== -->
+    <div class="page" id="page-diary">
+      <div class="section-title">🐶 养狗日记</div>
+      <div class="day-chips" id="dyDayChips"></div>
+      <div class="card">
+        <h3>🐶 桃子</h3>
+        <div class="pet-row">
+          <div class="pet-photo" id="taoziPhoto" onclick="document.getElementById('taoziPhotoInput').click()">
+            <span class="ph">📸</span><span class="pl">今日照片</span>
+            <span class="pdel" onclick="event.stopPropagation();deletePhoto('taozi')">✕</span>
+          </div>
+          <input type="file" id="taoziPhotoInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoUpload('taozi', this)">
+          <div class="pet-info">
+            <div class="pname">今日大事记</div>
+            <textarea placeholder="记录桃子今天的重要事情..." data-field="taozi_events"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>🐾 椰子（幼犬）</h3>
+        <div class="pet-row">
+          <div class="pet-photo" id="yeziPhoto" onclick="document.getElementById('yeziPhotoInput').click()">
+            <span class="ph">📸</span><span class="pl">今日照片</span>
+            <span class="pdel" onclick="event.stopPropagation();deletePhoto('yezi')">✕</span>
+          </div>
+          <input type="file" id="yeziPhotoInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoUpload('yezi', this)">
+          <div class="pet-info">
+            <div class="pname">今日大事记</div>
+            <textarea placeholder="记录椰子今天的重要事情..." data-field="yezi_events"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>📋 宠物大事记档案</h3>
+        <div id="petArchive"></div>
+        <button class="add-btn" onclick="addPetArchive()">+ 添加档案</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="success"><span class="nav-icon">⭐</span>成功日记</button>
+    <button class="nav-btn" data-page="xingce"><span class="nav-icon">📖</span>行测刷题</button>
+    <button class="nav-btn" data-page="shizheng"><span class="nav-icon">📰</span>时政推送</button>
+    <button class="nav-btn" data-page="shenlun"><span class="nav-icon">✍️</span>申论素材</button>
+    <button class="nav-btn" data-page="sport"><span class="nav-icon">🏃</span>运动</button>
+    <button class="nav-btn" data-page="diary"><span class="nav-icon">🐶</span>养狗</button>
+  </nav>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ===== CONSTANTS =====
+    const today = new Date();
+    const weekDays = ['周日','周一','周二','周三','周四','周五','周六'];
+    const todayKey = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+    let currentDay = todayKey;
+    let currentPage = 'success';
+
+    // ===== CLOCK =====
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('liveClock').textContent = 
+        `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+      document.getElementById('liveDate').textContent = 
+        `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${weekDays[now.getDay()]}`;
+      // Greeting
+      const h = now.getHours();
+      const g = h < 6 ? '夜深了' : h < 9 ? '早上好' : h < 12 ? '上午好' : h < 14 ? '中午好' : h < 18 ? '下午好' : h < 22 ? '晚上好' : '夜深了';
+      document.getElementById('greetingText').innerHTML = `${g}，<strong>追光者</strong> 👋`;
+    }
+    updateClock(); setInterval(updateClock, 1000);
+
+    // ===== MOTTO =====
+    const mottos = [
+      { icon: '💪', text: '每一天的努力，都是上岸的阶梯。' },
+      { icon: '🔥', text: '熬过无人问津的日子，才有诗和远方。' },
+      { icon: '🌟', text: '你的坚持，终将美好。' },
+      { icon: '📚', text: '星光不问赶路人，时光不负有心人。' },
+      { icon: '🏆', text: '乾坤未定，你我皆是黑马。' },
+      { icon: '🌅', text: '若你决定灿烂，山无遮，海无拦。' },
+      { icon: '🎯', text: '专注当下，每一步都算数。' },
+      { icon: '⚡', text: '比你优秀的人比你更努力。' },
+      { icon: '🦅', text: '大鹏一日同风起，扶摇直上九万里。' },
+      { icon: '🌊', text: '长风破浪会有时，直挂云帆济沧海。' },
+      { icon: '⛰', text: '会当凌绝顶，一览众山小。' },
+      { icon: '💎', text: '宝剑锋从磨砺出，梅花香自苦寒来。' },
+      { icon: '🚀', text: '今天的每一份付出，��在为未来铺路。' },
+      { icon: '🎓', text: '将来的你，一定会感谢现在拼命的自己。' },
+      { icon: '🐢', text: '慢一点没关系，只要不停下脚步。' },
+      { icon: '🌙', text: '披星戴月的路，终会繁花满地。' },
+      { icon: '🏠', text: '努力是为了给爱的人更好的生活。' },
+      { icon: '🧘', text: '不急不躁，按自己的节奏前进。' },
+      { icon: '🌈', text: '雨过天晴，终见彩虹。坚持住！' },
+      { icon: '🌻', text: '且停且忘且随风，且行且看且从容。' },
+    ];
+    function updateMotto() {
+      const m = mottos[Math.floor((today - new Date(today.getFullYear(),0,0)) / 86400000) % mottos.length];
+      document.getElementById('mottoIcon').textContent = m.icon;
+      document.getElementById('mottoText').textContent = m.text;
+    }
+    updateMotto();
+
+    // ===== DATA =====
+    const STORAGE_KEY = 'road_app_data';
+    let appData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
+
+    // ===== DAY CHIPS =====
+    function buildDays() {
+      const days = [];
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(today);
+        d.setDate(d.getDate() - today.getDay() + i);
+        days.push({
+          date: `${d.getMonth()+1}/${d.getDate()}`,
+          weekday: weekDays[d.getDay()],
+          key: `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
+        });
+      }
+      return days;
+    }
+    const dayNames = buildDays();
+
+    function renderDayChips(containerId) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      el.innerHTML = dayNames.map(d =>
+        `<button class="day-chip${d.key===currentDay?' active':''}" onclick="switchDay('${d.key}')">${d.date}<br><span style="font-size:9px;font-weight:400;">${d.weekday}</span></button>`
+      ).join('');
+    }
+
+    function switchDay(key) {
+      currentDay = key;
+      renderDayChips('xcDayChips');
+      renderDayChips('spDayChips');
+      renderDayChips('dyDayChips');
+      loadDayData();
+    }
+
+    function loadDayData() {
+      const dd = appData[currentDay] || {};
+      document.querySelectorAll('[data-field]').forEach(el => {
+        if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') {
+          el.value = dd[el.dataset.field] || '';
+        }
+      });
+      loadPhoto('taozi', dd.taozi_photo);
+      loadPhoto('yezi', dd.yezi_photo);
+      updateSuccessUI();
+    }
+
+    // ===== AUTO SAVE =====
+    let saveTimeout;
+    document.addEventListener('input', function(e) {
+      if (!e.target.dataset.field) return;
+      if (!appData[currentDay]) appData[currentDay] = {};
+      appData[currentDay][e.target.dataset.field] = e.target.value;
+      save();
+      // Show save indicator for success input
+      if (e.target.id === 'successInput') {
+        const ind = document.getElementById('saveIndicator');
+        ind.classList.add('show');
+        const input = e.target;
+        if (input.value.trim()) input.classList.add('has-content');
+        else input.classList.remove('has-content');
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => { ind.classList.remove('show'); updateSuccessUI(); }, 800);
+      }
+    });
+
+    // ===== SUCCESS DIARY =====
+    function updateSuccessUI() {
+      // Streak
+      const entries = [];
+      for (const [key, dd] of Object.entries(appData)) {
+        if (key.match(/^\d{4}-\d{2}-\d{2}$/) && dd.success_today && dd.success_today.trim()) {
+          entries.push({ date: key, content: dd.success_today.trim() });
+        }
+      }
+      entries.sort((a, b) => b.date.localeCompare(a.date));
+
+      let streak = 0;
+      const cd = new Date(today);
+      for (let i = 0; i < 365; i++) {
+        const dk = `${cd.getFullYear()}-${String(cd.getMonth()+1).padStart(2,'0')}-${String(cd.getDate()).padStart(2,'0')}`;
+        if ((appData[dk] || {}).success_today && appData[dk].success_today.trim()) {
+          streak++;
+          cd.setDate(cd.getDate() - 1);
+        } else break;
+      }
+
+      document.getElementById('streakCount').textContent = streak;
+      document.getElementById('totalSuccess').textContent = `共 ${entries.length} 条`;
+      const msg = document.getElementById('streakMsg');
+      if (streak >= 30) msg.textContent = '🏆 一个月不间断！你已经是自律达人了！';
+      else if (streak >= 14) msg.textContent = '🌟 两周了！这个习惯已经深深扎根！';
+      else if (streak >= 7) msg.textContent = '🔥 连续一周！你正在成为更好的自己！';
+      else if (streak >= 3) msg.textContent = '💪 好的开始！继续保持这个节奏！';
+      else if (streak >= 1) msg.textContent = '🌱 迈出了第一步，坚持下去！';
+      else msg.textContent = '从今天开始，记录你的每一次成功 ✨';
+
+      // Today input
+      const todayData = appData[todayKey] || {};
+      const input = document.getElementById('successInput');
+      if (input.value !== (todayData.success_today || '')) {
+        input.value = todayData.success_today || '';
+      }
+      if (input.value.trim()) input.classList.add('has-content');
+      else input.classList.remove('has-content');
+
+      // Timeline
+      const tl = document.getElementById('successTimeline');
+      if (entries.length === 0) {
+        tl.innerHTML = '<div class="empty-state"><div class="empty-icon">✨</div><p>每一天的成功都值得被铭记</p><p style="font-size:11px;margin-top:4px;">写下今天的第一条吧</p></div>';
+        return;
+      }
+      tl.innerHTML = entries.map(e => {
+        const d = new Date(e.date + 'T00:00:00');
+        return `<div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="tl-date">${d.getMonth()+1}/${d.getDate()} ${weekDays[d.getDay()]}</div>
+          <div class="tl-content">${escapeHtml(e.content)}</div>
+          <span class="tl-delete" onclick="deleteSuccess('${e.date}')">🗑</span>
+        </div>`;
+      }).join('');
+    }
+
+    function fillPrompt(text) {
+      const input = document.getElementById('successInput');
+      const current = input.value.trim();
+      input.value = current ? current + '\n' + text : text;
+      input.focus();
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    function deleteSuccess(dateKey) {
+      if (!appData[dateKey]) return;
+      delete appData[dateKey].success_today;
+      save();
+      if (dateKey === todayKey) {
+        document.getElementById('successInput').value = '';
+        document.getElementById('successInput').classList.remove('has-content');
+      }
+      updateSuccessUI();
+      showToast('🗑 已删除');
+    }
+
+    // ===== PAGES =====
+    document.querySelector('.bottom-nav').addEventListener('click', function(e) {
+      const btn = e.target.closest('.nav-btn');
+      if (!btn) return;
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentPage = btn.dataset.page;
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + currentPage).classList.add('active');
+      if (currentPage === 'xingce') renderDayChips('xcDayChips');
+      if (currentPage === 'sport') { renderDayChips('spDayChips'); renderSportSummary(); }
+      if (currentPage === 'diary') renderDayChips('dyDayChips');
+      if (currentPage === 'success') updateSuccessUI();
+    });
+
+    // ===== NEWS =====
+    function refreshNews(type) {
+      if (type === 'national') {
+        document.getElementById('nationalNews').innerHTML = `
+          <div class="info-item"><div class="dot"></div><div class="info-content">2026年中央一号文件聚焦乡村全面振兴<div class="meta">乡村振兴 · 高频考点</div></div></div>
+          <div class="info-item"><div class="dot"></div><div class="info-content">新质生产力成为2026年经济发展核心关键词<div class="meta">经济发展 · 必考热点</div></div></div>
+          <div class="info-item"><div class="dot"></div><div class="info-content">国务院发布《数字中国建设整体布局规划》实施方案<div class="meta">数字经济 · 科技创新</div></div></div>
+          <div class="info-item"><div class="dot"></div><div class="info-content">全国生态环境保护大会：建设人与自然和谐共生的现代化<div class="meta">生态环保 · 重要论述</div></div></div>
+          <div class="info-item"><div class="dot"></div><div class="info-content">2026年城镇新增就业目标1200万人以上<div class="meta">民生保障 · 数据要点</div></div></div>
+        `;
+      } else {
+        document.getElementById('jiangsuNews').innerHTML = `
+          <div class="info-item"><div class="dot"></div><div class="info-content">江苏省2026年GDP目标增长5.5%以上<div class="meta">省情数据 · 江苏特色</div></div></div>
+          <div class="info-item"><div class="dot"></div><div class="info-content">"1650"产业体系2.0版，新增氢能、低空经济<div class="meta">新质生产力 · 江苏实践</div></div></div>
+          <div class="info-item"><div class="dot"></div><div class="info-content">苏州、南京入选全国首批便民生活圈示范城市<div class="meta">民生服务 · 基层治理</div></div></div>
+          <div class="info-item"><div class="dot"></div><div class="info-content">江苏省考2026年招录规模扩大，基层岗位超60%<div class="meta">公考动态 · 重点关注</div></div></div>
+          <div class="info-item"><div class="dot"></div><div class="info-content">太湖流域水质创近十年最好水平<div class="meta">生态环保 · 江苏案例</div></div></div>
+        `;
+      }
+      showToast('✅ 已更新');
+    }
+
+    // ===== NOTES =====
+    function renderShizhengNotes() {
+      const notes = appData.shizheng_notes || [];
+      document.getElementById('shizhengNotes').innerHTML = notes.map((n,i) =>
+        `<div class="info-item"><div class="dot"></div><div class="info-content">${escapeHtml(n.content)}<div class="meta">${escapeHtml(n.date)}</div></div><span style="color:var(--text3);font-size:10px;cursor:pointer;flex-shrink:0;" onclick="delItem('shizheng_notes',${i})">✕</span></div>`
+      ).join('') || '<div style="color:var(--text3);font-size:11px;padding:6px 0;">暂无笔记</div>';
+    }
+    function addShizhengNote() {
+      const c = prompt('输入时政笔记：'); if (!c) return;
+      if (!appData.shizheng_notes) appData.shizheng_notes = [];
+      appData.shizheng_notes.push({ content: c, date: `${today.getMonth()+1}/${today.getDate()}` });
+      save(); renderShizhengNotes(); showToast('✅ 已添加');
+    }
+
+    function renderShenlunNotes() {
+      const notes = appData.shenlun_notes || [];
+      document.getElementById('shenlunNotes').innerHTML = notes.map((n,i) =>
+        `<div class="mat-card"><h4>${escapeHtml(n.title)} <span style="font-weight:400;font-size:10px;color:var(--text3);">${escapeHtml(n.category)}</span></h4><p>${escapeHtml(n.content)}</p><span style="color:var(--text3);font-size:10px;cursor:pointer;float:right;" onclick="delItem('shenlun_notes',${i})">✕</span><div style="clear:both"></div></div>`
+      ).join('') || '<div style="color:var(--text3);font-size:11px;padding:6px 0;">暂无素材笔记</div>';
+    }
+    function addShenlunNote() {
+      const title = prompt('素材标题：'); if (!title) return;
+      const category = prompt('类别（生态环保/基层治理/经济发展/文化建设）：');
+      const content = prompt('内容：'); if (!content) return;
+      if (!appData.shenlun_notes) appData.shenlun_notes = [];
+      appData.shenlun_notes.push({ title, category: category||'未分类', content });
+      save(); renderShenlunNotes(); showToast('✅ 已添加');
+    }
+
+    // ===== SPORT =====
+    function renderSportSummary() {
+      const s = document.getElementById('sportWeekSummary');
+      const sportDays = dayNames.map(d => appData[d.key] || {}).filter(d => d.sport_type && d.sport_type.trim());
+      if (!sportDays.length) { s.innerHTML = '本周暂无运动记录，加油！'; return; }
+      let total = 0;
+      sportDays.forEach(d => { total += parseInt(d.sport_duration) || 0; });
+      s.innerHTML = `🏃 运动 <strong>${sportDays.length}/7</strong> 天 · ⏱ 总时长 <strong>${total}</strong> 分钟 · 📊 日均 <strong>${Math.round(total/7)}</strong> 分钟`;
+    }
+
+    // ===== PET PHOTOS =====
+    function handlePhotoUpload(pet, input) {
+      const file = input.files[0]; if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        if (!appData[currentDay]) appData[currentDay] = {};
+        appData[currentDay][pet + '_photo'] = e.target.result;
+        save(); loadPhoto(pet, e.target.result);
+        showToast('📸 ' + (pet==='taozi'?'桃子':'椰子') + '照片已保存');
+      };
+      reader.readAsDataURL(file);
+    }
+    function loadPhoto(pet, dataUrl) {
+      const box = document.getElementById(pet + 'Photo');
+      if (!box) return;
+      const img = box.querySelector('img');
+      if (img) img.remove();
+      if (dataUrl) {
+        const ni = document.createElement('img');
+        ni.src = dataUrl; box.appendChild(ni); box.classList.add('has-photo');
+      } else { box.classList.remove('has-photo'); }
+    }
+    function deletePhoto(pet) {
+      if (!appData[currentDay]) return;
+      delete appData[currentDay][pet + '_photo'];
+      save(); loadPhoto(pet, null); showToast('🗑 照片已删除');
+    }
+
+    // ===== PET ARCHIVE =====
+    function renderPetArchive() {
+      const a = appData.pet_archive || [];
+      document.getElementById('petArchive').innerHTML = a.map((r,i) =>
+        `<div class="info-item"><div class="dot"></div><div class="info-content"><strong>${escapeHtml(r.pet)}</strong> · ${escapeHtml(r.project)}<div class="meta">${escapeHtml(r.date)} — ${escapeHtml(r.detail)}</div></div><span style="color:var(--text3);font-size:10px;cursor:pointer;flex-shrink:0;" onclick="delItem('pet_archive',${i})">✕</span></div>`
+      ).join('') || '<div style="color:var(--text3);font-size:11px;padding:6px 0;">暂无档案记录</div>';
+    }
+    function addPetArchive() {
+      const pet = prompt('宠物（桃子/椰子）：'); if (!pet) return;
+      const project = prompt('项目（疫苗/驱虫/洗澡）：'); if (!project) return;
+      const date = prompt('日期：', `${today.getMonth()+1}/${today.getDate()}`);
+      const detail = prompt('详情：');
+      if (!appData.pet_archive) appData.pet_archive = [];
+      appData.pet_archive.push({ pet, project, date, detail: detail||'' });
+      save(); renderPetArchive(); showToast('✅ 已添加');
+    }
+
+    // ===== HELPERS =====
+    function delItem(key, i) { if (!appData[key]) return; appData[key].splice(i,1); save(); refreshAll(); }
+    function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    function showToast(m) { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+
+    function refreshAll() {
+      renderShizhengNotes(); renderShenlunNotes(); renderPetArchive(); renderSportSummary();
+    }
+
+    // ===== INIT =====
+    renderDayChips('xcDayChips');
+    renderDayChips('spDayChips');
+    renderDayChips('dyDayChips');
+    loadDayData();
+    refreshAll();
+    updateSuccessUI();
+
+    // ===== PWA =====
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault(); deferredPrompt = e;
+    });
+  </script>
+</body>
+</html>
