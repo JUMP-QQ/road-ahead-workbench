@@ -7,586 +7,512 @@
   <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="道路的前面还是道路">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#0f0f23">
-  <link rel="manifest" href="/manifest.json?v=2">
-  <link rel="apple-touch-icon" href="/icon-192.png?v=2">
+  <meta name="theme-color" content="#f0e6ff">
+  <link rel="manifest" href="/manifest.json?v=3">
+  <link rel="apple-touch-icon" href="/icon-192.png?v=3">
   <title>道路的前面还是道路</title>
   <style>
     :root {
-      --bg: #0f0f23;
-      --surface: #1a1a2e;
-      --surface2: #16213e;
-      --text: #e4e4e7;
-      --text2: #a1a1aa;
-      --text3: #71717a;
-      --accent: #818cf8;
-      --accent2: #c084fc;
-      --gold: #fbbf24;
-      --gold2: #f59e0b;
-      --green: #34d399;
-      --red: #f87171;
-      /* 模块专属色 */
-      --c-success: #f59e0b;
-      --c-success-bg: rgba(245,158,11,0.08);
-      --c-xingce: #60a5fa;
-      --c-xingce-bg: rgba(96,165,250,0.08);
-      --c-shizheng: #f87171;
-      --c-shizheng-bg: rgba(248,113,113,0.08);
-      --c-shenlun: #a78bfa;
-      --c-shenlun-bg: rgba(167,139,250,0.08);
-      --c-sport: #34d399;
-      --c-sport-bg: rgba(52,211,153,0.08);
-      --c-diary: #2dd4bf;
-      --c-diary-bg: rgba(45,212,191,0.08);
+      --bg: linear-gradient(180deg, #f7f0ff 0%, #fff5f7 100%);
+      --sidebar: #ede4ff;
+      --sidebar-active: #ffffff;
+      --surface: #ffffff;
+      --surface2: #f8f6ff;
+      --text: #3d3d4e;
+      --text2: #7a7a8c;
+      --text3: #a0a0b0;
+      --border: rgba(0,0,0,0.05);
+      --shadow: 0 4px 20px rgba(139, 92, 246, 0.08);
+      --shadow-sm: 0 2px 10px rgba(139, 92, 246, 0.06);
       --radius: 20px;
       --radius-sm: 14px;
+      --c-success: #ffaa5c;
+      --c-xingce: #6fb3f9;
+      --c-shizheng: #ff8a8a;
+      --c-shenlun: #b58df1;
+      --c-sport: #6ee7b7;
+      --c-diary: #5eead4;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
       background: var(--bg);
+      background-attachment: fixed;
       color: var(--text);
       line-height: 1.55;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      padding-bottom: 110px;
+      overflow: hidden;
       font-weight: 400;
-      letter-spacing: 0.01em;
     }
-    .ambient {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none; z-index: 0;
-    }
-    .ambient .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.12;
-    }
-    .orb-1 { width: 200px; height: 200px; background: var(--accent); top: -40px; right: -40px; animation: float1 8s ease-in-out infinite; }
-    .orb-2 { width: 160px; height: 160px; background: var(--accent2); bottom: 20%; left: -30px; animation: float2 10s ease-in-out infinite; }
-    .orb-3 { width: 120px; height: 120px; background: var(--gold); top: 50%; right: 20%; animation: float3 12s ease-in-out infinite; }
-    @keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-20px,30px) scale(1.15); } }
-    @keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-20px) scale(1.1); } }
-    @keyframes float3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-15px,-25px) scale(1.2); } }
+    .app { display: flex; height: 100vh; height: 100dvh; }
 
-    .container { max-width: 480px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+    /* 左侧导航 */
+    .sidebar {
+      width: 92px; flex-shrink: 0; background: var(--sidebar);
+      display: flex; flex-direction: column; align-items: center;
+      padding: 16px 0 env(safe-area-inset-bottom, 0);
+      border-right: 1px solid rgba(139,92,246,0.08);
+      overflow-y: auto;
+    }
+    .sidebar::-webkit-scrollbar { display: none; }
+    .app-logo {
+      width: 52px; height: 52px; border-radius: 16px;
+      background: linear-gradient(135deg, #a78bfa, #f472b6);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin-bottom: 8px; box-shadow: var(--shadow-sm);
+    }
+    .app-name { font-size: 11px; font-weight: 700; color: var(--text); text-align: center; line-height: 1.3; margin-bottom: 20px; padding: 0 8px; }
+    .nav-list { width: 100%; padding: 0 8px; display: flex; flex-direction: column; gap: 8px; }
+    .nav-btn {
+      width: 100%; display: flex; flex-direction: column; align-items: center; gap: 4px;
+      background: transparent; border: none; border-radius: 16px;
+      padding: 10px 4px; color: var(--text2); font-size: 11px; font-weight: 600;
+      cursor: pointer; transition: all 0.25s; font-family: inherit; position: relative;
+    }
+    .nav-btn .nav-icon { font-size: 24px; filter: grayscale(0.2); transition: all 0.25s; }
+    .nav-btn.active { background: var(--sidebar-active); color: var(--text); box-shadow: var(--shadow-sm); }
+    .nav-btn.active::after {
+      content: ''; position: absolute; right: -8px; top: 50%; transform: translateY(-50%);
+      width: 4px; height: 24px; background: var(--c-success); border-radius: 2px 0 0 2px;
+    }
+    .nav-btn[data-page="xingce"].active::after { background: var(--c-xingce); }
+    .nav-btn[data-page="shizheng"].active::after { background: var(--c-shizheng); }
+    .nav-btn[data-page="shenlun"].active::after { background: var(--c-shenlun); }
+    .nav-btn[data-page="sport"].active::after { background: var(--c-sport); }
+    .nav-btn[data-page="diary"].active::after { background: var(--c-diary); }
+    .nav-btn.active .nav-icon { filter: grayscale(0); transform: scale(1.1); }
 
-    .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 0 8px; }
+    /* 主内容区 */
+    .main { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px 14px calc(16px + env(safe-area-inset-bottom, 0)); -webkit-overflow-scrolling: touch; }
+    .main::-webkit-scrollbar { display: none; }
+
+    .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
     .top-bar .greeting { font-size: 15px; color: var(--text2); }
     .top-bar .greeting strong { color: var(--text); font-size: 16px; }
-    .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .top-bar .avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #a78bfa, #f472b6); display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: var(--shadow-sm); }
 
-    /* ===== 时钟卡片 ===== */
+    /* 时钟卡片 */
     .hero-card {
-      background: linear-gradient(145deg, #1a1838, #252350);
-      border-radius: var(--radius);
-      padding: 16px 18px;
-      margin: 8px 0 14px;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(129,140,248,0.12);
+      background: linear-gradient(135deg, #e9d5ff 0%, #fce7f3 100%);
+      border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px;
+      box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.6);
     }
-    .hero-card::after { content: ''; position: absolute; top: -60%; right: -40%; width: 160px; height: 160px; background: radial-gradient(circle, rgba(192,132,252,0.12), transparent); border-radius: 50%; }
-    .hero-time { font-size: 36px; font-weight: 300; letter-spacing: 1px; font-variant-numeric: tabular-nums; font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; position: relative; z-index: 1; }
-    .hero-date { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 1px; position: relative; z-index: 1; }
-    .hero-motto { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 8px; font-weight: 500; position: relative; z-index: 1; line-height: 1.5; }
+    .hero-time { font-size: 34px; font-weight: 300; letter-spacing: 1px; font-variant-numeric: tabular-nums; font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; color: #5b4b6e; }
+    .hero-date { font-size: 13px; color: #8b7d9a; margin-top: 2px; }
+    .hero-motto { font-size: 13px; color: #6b5b7e; margin-top: 8px; font-weight: 500; line-height: 1.5; }
 
-    /* ===== 连续打卡 ===== */
-    .streak-badge { display: flex; align-items: center; gap: 10px; background: var(--surface); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px; border: 1px solid rgba(251,191,36,0.15); }
-    .streak-fire { font-size: 34px; animation: pulse 2s ease-in-out infinite; }
+    /* 宠物相册 */
+    .pet-gallery {
+      background: var(--surface); border-radius: var(--radius); padding: 14px;
+      margin-bottom: 14px; box-shadow: var(--shadow); border: 1px solid var(--border);
+    }
+    .pet-gallery-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; color: var(--text); }
+    .pet-photos { display: flex; gap: 10px; }
+    .pet-frame {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .pet-frame img {
+      width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 16px;
+      border: 2px solid #f3e8ff; box-shadow: var(--shadow-sm);
+    }
+    .pet-frame .pet-name { font-size: 12px; font-weight: 700; color: var(--text2); }
+
+    /* 连续打卡 */
+    .streak-badge {
+      display: flex; align-items: center; gap: 10px; background: var(--surface);
+      border-radius: var(--radius); padding: 14px 16px; margin-bottom: 14px;
+      box-shadow: var(--shadow); border: 1px solid var(--border);
+      border-left: 4px solid var(--c-success);
+    }
+    .streak-fire { font-size: 32px; animation: pulse 2s ease-in-out infinite; }
     @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
     .streak-info { flex: 1; }
-    .streak-count { font-size: 26px; font-weight: 800; background: linear-gradient(135deg, var(--gold), var(--gold2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .streak-label { font-size: 13px; color: var(--text2); }
+    .streak-count { font-size: 26px; font-weight: 800; color: var(--c-success); }
+    .streak-label { font-size: 12px; color: var(--text2); }
 
-    /* ===== 今日卡片 ===== */
-    .today-card { background: var(--surface); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; border: 1px solid rgba(255,255,255,0.04); border-top: 3px solid var(--c-success); }
-    .today-card .card-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
-    .today-card .card-subtitle { font-size: 13px; color: var(--text3); margin-bottom: 14px; }
-    .today-input { width: 100%; background: var(--surface2); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 15px; color: var(--text); font-family: inherit; outline: none; resize: none; min-height: 100px; line-height: 1.7; transition: border-color 0.3s; }
-    .today-input:focus { border-color: var(--c-success); }
-    .today-input::placeholder { color: var(--text3); font-size: 14px; }
-    .today-input.has-content { border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.04); }
-    .save-indicator { font-size: 13px; color: var(--green); margin-top: 8px; display: none; align-items: center; gap: 4px; }
+    /* 今日记录卡 */
+    .today-card { background: var(--surface); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow); border: 1px solid var(--border); border-top: 3px solid var(--c-success); }
+    .today-card .card-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+    .today-card .card-subtitle { font-size: 12px; color: var(--text3); margin-bottom: 12px; }
+    .today-input {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 12px 14px; font-size: 14px; color: var(--text); font-family: inherit;
+      outline: none; resize: none; min-height: 90px; line-height: 1.7; transition: all 0.3s;
+    }
+    .today-input:focus { border-color: var(--c-success); background: #fff; }
+    .today-input::placeholder { color: var(--text3); font-size: 13px; }
+    .today-input.has-content { border-color: rgba(255,170,92,0.5); background: rgba(255,170,92,0.04); }
+    .save-indicator { font-size: 12px; color: #22c55e; margin-top: 6px; display: none; align-items: center; gap: 4px; }
     .save-indicator.show { display: flex; }
     .quick-prompts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-    .quick-prompt { font-size: 13px; padding: 6px 12px; background: var(--surface2); border: 1px solid rgba(255,255,255,0.05); border-radius: 18px; color: var(--text2); cursor: pointer; transition: all 0.2s; }
+    .quick-prompt { font-size: 12px; padding: 5px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 16px; color: var(--text2); cursor: pointer; transition: all 0.2s; }
     .quick-prompt:active { background: var(--c-success); color: #fff; border-color: var(--c-success); }
 
-    /* ===== 时间线 ===== */
-    .timeline-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-    .timeline { position: relative; padding-left: 28px; }
-    .timeline::before { content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--gold), var(--accent), transparent); }
-    .timeline-item { position: relative; margin-bottom: 14px; padding: 14px 16px; background: var(--surface); border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.03); animation: fadeInUp 0.4s ease-out; }
+    /* 时间线 */
+    .timeline-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before { content: ''; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--c-success), #d8b4fe, transparent); }
+    .timeline-item { position: relative; margin-bottom: 12px; padding: 12px 14px; background: var(--surface); border-radius: var(--radius-sm); border: 1px solid var(--border); box-shadow: var(--shadow-sm); animation: fadeInUp 0.4s ease-out; }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .timeline-dot { position: absolute; left: -21px; top: 18px; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg); }
-    .timeline-item:nth-child(odd) .timeline-dot { background: var(--gold); }
-    .timeline-item:nth-child(even) .timeline-dot { background: var(--accent); }
-    .timeline-item:nth-child(3n) .timeline-dot { background: var(--accent2); }
-    .tl-date { font-size: 12px; color: var(--text3); margin-bottom: 4px; font-weight: 600; letter-spacing: 0.3px; }
-    .tl-content { font-size: 14px; line-height: 1.7; color: var(--text); }
-    .tl-delete { position: absolute; top: 12px; right: 14px; font-size: 16px; color: var(--text3); cursor: pointer; opacity: 0; transition: opacity 0.2s; }
+    .timeline-dot { position: absolute; left: -20px; top: 16px; width: 12px; height: 12px; border-radius: 50%; background: var(--c-success); border: 3px solid #f7f0ff; }
+    .tl-date { font-size: 11px; color: var(--text3); margin-bottom: 3px; font-weight: 600; }
+    .tl-content { font-size: 13px; line-height: 1.7; color: var(--text); }
+    .tl-delete { position: absolute; top: 10px; right: 12px; font-size: 14px; color: var(--text3); cursor: pointer; opacity: 0; transition: opacity 0.2s; }
     .timeline-item:hover .tl-delete, .timeline-item:active .tl-delete { opacity: 0.6; }
 
-    /* ===== 底部导航 ===== */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(22,22,42,0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; justify-content: space-around; padding: 8px 0 env(safe-area-inset-bottom, 8px); border-top: 1px solid rgba(255,255,255,0.05); z-index: 100; }
-    .nav-btn { display: flex; flex-direction: column; align-items: center; gap: 2px; background: none; border: none; color: var(--text3); font-size: 11px; font-weight: 600; cursor: pointer; padding: 6px 10px; border-radius: 12px; transition: all 0.2s; font-family: inherit; position: relative; }
-    .nav-btn .nav-icon { font-size: 22px; }
-    .nav-btn.active { color: var(--accent); }
-    .nav-btn.active::before { content: ''; position: absolute; top: -9px; width: 18px; height: 2px; background: var(--accent); border-radius: 1px; }
+    /* 通用卡片 */
+    .section-title { font-size: 17px; font-weight: 700; margin: 0 0 12px; display: flex; align-items: center; gap: 6px; }
+    .card { background: var(--surface); border-radius: var(--radius); padding: 14px; margin-bottom: 12px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+    .card h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+    table.mini { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table.mini td { padding: 7px 2px; border-bottom: 1px solid var(--border); }
+    table.mini td:first-child { width: 64px; font-weight: 600; color: var(--text2); font-size: 12px; }
+    table.mini input { width: 100%; border: none; background: transparent; font-size: 13px; color: var(--text); font-family: inherit; outline: none; padding: 4px 0; }
+    table.mini input::placeholder { color: var(--text3); font-size: 12px; }
 
-    .page { display: none; }
-    .page.active { display: block; }
-
-    /* ===== 通用卡片 ===== */
-    .section-title { font-size: 18px; font-weight: 700; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
-    .card { background: var(--surface); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.03); }
-    .card h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-    table.mini { width: 100%; border-collapse: collapse; font-size: 14px; }
-    table.mini td { padding: 8px 2px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-    table.mini td:first-child { width: 68px; font-weight: 600; color: var(--text2); font-size: 13px; }
-    table.mini input { width: 100%; border: none; background: transparent; font-size: 14px; color: var(--text); font-family: inherit; outline: none; padding: 5px 0; }
-    table.mini input::placeholder { color: var(--text3); font-size: 13px; }
-
-    .day-chips { display: flex; gap: 5px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 2px; }
+    .day-chips { display: flex; gap: 5px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 2px; }
     .day-chips::-webkit-scrollbar { display: none; }
-    .day-chip { flex: 0 0 auto; padding: 7px 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.07); background: var(--surface2); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--text2); font-family: inherit; white-space: nowrap; }
-    .day-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .day-chip { flex: 0 0 auto; padding: 6px 11px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface2); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--text2); font-family: inherit; white-space: nowrap; }
+    .day-chip.active { background: var(--c-xingce); color: #fff; border-color: var(--c-xingce); }
 
-    .info-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; }
+    .info-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
     .info-item:last-child { border-bottom: none; }
-    .info-item .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); margin-top: 5px; flex-shrink: 0; }
-    .info-item .meta { color: var(--text3); font-size: 12px; margin-top: 2px; }
+    .info-item .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--c-shenlun); margin-top: 5px; flex-shrink: 0; }
+    .info-item .meta { color: var(--text3); font-size: 11px; margin-top: 2px; }
 
-    .fw-item { padding: 10px 12px; background: var(--surface2); border-radius: 10px; margin-bottom: 6px; font-size: 13px; }
-    .fw-item .fw-type { font-weight: 700; color: var(--accent); font-size: 14px; }
-    .fw-item .fw-desc { color: var(--text3); font-size: 12px; margin-top: 2px; }
+    .fw-item { padding: 9px 11px; background: var(--surface2); border-radius: 10px; margin-bottom: 6px; font-size: 12px; }
+    .fw-item .fw-type { font-weight: 700; color: var(--c-shenlun); font-size: 13px; }
+    .fw-item .fw-desc { color: var(--text3); font-size: 12px; margin-top: 1px; }
 
-    .goal-row { display: flex; align-items: center; gap: 8px; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; }
+    .goal-row { display: flex; align-items: center; gap: 6px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
     .goal-row:last-child { border-bottom: none; }
-    .goal-row input { flex: 1; border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 7px 10px; font-size: 13px; font-family: inherit; background: var(--surface2); color: var(--text); outline: none; }
-    .goal-row input::placeholder { color: var(--text3); font-size: 12px; }
+    .goal-row input { flex: 1; border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-size: 12px; font-family: inherit; background: var(--surface2); color: var(--text); outline: none; }
+    .goal-row input::placeholder { color: var(--text3); font-size: 11px; }
 
-    /* ===== 养狗日记 ===== */
+    /* 养狗日记 */
     .pet-row { display: flex; gap: 12px; align-items: flex-start; }
-    .pet-photo { width: 90px; height: 90px; border-radius: var(--radius-sm); border: 2px dashed rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; background: var(--surface2); flex-shrink: 0; font-size: 11px; color: var(--text3); gap: 2px; }
+    .pet-photo { width: 82px; height: 82px; border-radius: var(--radius-sm); border: 2px dashed #ddd6fe; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; background: var(--surface2); flex-shrink: 0; font-size: 10px; color: var(--text3); gap: 2px; }
     .pet-photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
-    .pet-photo .ph { font-size: 26px; }
-    .pet-photo .pl { font-size: 11px; color: var(--text3); position: relative; z-index: 1; }
+    .pet-photo .ph { font-size: 24px; }
+    .pet-photo .pl { font-size: 10px; color: var(--text3); position: relative; z-index: 1; }
     .pet-photo.has-photo .ph, .pet-photo.has-photo .pl { display: none; }
-    .pet-photo .pdel { position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; border-radius: 50%; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 2; }
+    .pet-photo .pdel { position: absolute; top: 3px; right: 3px; width: 18px; height: 18px; border-radius: 50%; background: rgba(0,0,0,0.5); color: #fff; font-size: 10px; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 2; }
     .pet-photo.has-photo .pdel { display: flex; }
     .pet-info { flex: 1; }
-    .pet-info .pname { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
-    .pet-info textarea { width: 100%; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 10px 12px; font-size: 14px; font-family: inherit; background: var(--surface2); color: var(--text); outline: none; resize: none; min-height: 72px; }
-    .pet-info textarea::placeholder { color: var(--text3); font-size: 13px; }
+    .pet-info .pname { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+    .pet-info textarea { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 9px 11px; font-size: 13px; font-family: inherit; background: var(--surface2); color: var(--text); outline: none; resize: none; min-height: 64px; }
+    .pet-info textarea::placeholder { color: var(--text3); font-size: 12px; }
 
-    .add-btn { width: 100%; padding: 12px; border: 1px dashed rgba(255,255,255,0.08); border-radius: var(--radius-sm); background: transparent; color: var(--text3); font-size: 14px; cursor: pointer; font-family: inherit; margin-top: 6px; transition: all 0.2s; }
-    .add-btn:active { border-color: var(--accent); color: var(--accent); background: rgba(129,140,248,0.05); }
+    .add-btn { width: 100%; padding: 10px; border: 1px dashed #ddd6fe; border-radius: var(--radius-sm); background: transparent; color: var(--text3); font-size: 13px; cursor: pointer; font-family: inherit; margin-top: 6px; transition: all 0.2s; }
+    .add-btn:active { border-color: var(--c-shenlun); color: var(--c-shenlun); background: rgba(181,141,241,0.05); }
 
-    /* ===== 申论素材 / 时政推送 共用 daily-material ===== */
+    /* 申论/时政 每日卡片 */
     .daily-material {
-      background: linear-gradient(145deg, #1e1b4b, #2d2a5e);
-      border-radius: var(--radius);
-      padding: 18px;
-      margin-bottom: 14px;
-      border: 1px solid rgba(167,139,250,0.2);
-      position: relative;
-      overflow: hidden;
+      background: linear-gradient(135deg, #f3e8ff 0%, #fae8ff 100%);
+      border-radius: var(--radius); padding: 16px; margin-bottom: 14px;
+      box-shadow: var(--shadow); border: 1px solid rgba(181,141,241,0.15);
     }
-    .daily-material::before {
-      content: 'TODAY';
-      position: absolute;
-      top: 8px; right: 12px;
-      font-size: 11px; font-weight: 800;
-      color: rgba(255,255,255,0.08);
-      letter-spacing: 2px;
-    }
-    .daily-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .daily-header .daily-icon { font-size: 22px; }
+    .daily-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .daily-header .daily-icon { font-size: 20px; }
     .daily-header .daily-title { flex: 1; }
-    .daily-header .daily-title h3 { font-size: 16px; margin-bottom: 2px; }
-    .daily-header .daily-title .daily-sub { font-size: 12px; color: rgba(255,255,255,0.55); }
-    .daily-category {
-      display: inline-block;
-      padding: 4px 12px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 16px;
-      font-size: 12px;
-      color: var(--gold);
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    .daily-content { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.85); margin-bottom: 12px; }
-    .daily-section { margin-top: 14px; }
-    .daily-section h4 { font-size: 13px; color: var(--gold); margin-bottom: 6px; font-weight: 700; }
-    .daily-section p { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.72); }
-    .daily-quote {
-      margin-top: 14px;
-      padding: 12px 14px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 12px;
-      border-left: 3px solid var(--gold);
-      font-size: 13px;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.82);
-      font-style: italic;
-    }
+    .daily-header .daily-title h3 { font-size: 15px; margin-bottom: 1px; color: var(--text); }
+    .daily-header .daily-title .daily-sub { font-size: 11px; color: var(--text3); }
+    .daily-category { display: inline-block; padding: 3px 10px; background: rgba(181,141,241,0.12); border-radius: 14px; font-size: 11px; color: var(--c-shenlun); font-weight: 700; margin-bottom: 8px; }
+    .daily-content { font-size: 14px; line-height: 1.6; color: var(--text); margin-bottom: 10px; font-weight: 600; }
+    .daily-section { margin-top: 12px; }
+    .daily-section h4 { font-size: 12px; color: var(--c-shenlun); margin-bottom: 4px; font-weight: 700; }
+    .daily-section p { font-size: 12px; line-height: 1.7; color: var(--text2); }
+    .daily-quote { margin-top: 12px; padding: 10px 12px; background: rgba(255,255,255,0.6); border-radius: 10px; border-left: 3px solid var(--c-shenlun); font-size: 12px; line-height: 1.7; color: var(--text2); font-style: italic; }
 
-    /* 素材卡片 */
+    /* 时政特殊色 */
+    #page-shizheng .daily-material { background: linear-gradient(135deg, #ffe4e6 0%, #fff0f3 100%); border-color: rgba(248,113,113,0.15); }
+    #page-shizheng .daily-category { background: rgba(248,113,113,0.12); color: var(--c-shizheng); }
+    #page-shizheng .daily-section h4 { color: var(--c-shizheng); }
+    #page-shizheng .daily-quote { border-left-color: var(--c-shizheng); }
+
     .material-card {
-      background: var(--surface2);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      margin-bottom: 8px;
-      border-left: 3px solid var(--accent);
-      cursor: pointer;
-      transition: all 0.2s;
+      background: var(--surface); border-radius: var(--radius-sm); padding: 13px; margin-bottom: 8px;
+      border: 1px solid var(--border); border-left: 3px solid var(--c-shenlun);
+      box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.2s;
     }
-    .material-card:hover { background: rgba(129,140,248,0.06); }
-    .material-card .mc-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 4px;
-    }
-    .material-card .mc-title { font-size: 14px; font-weight: 700; color: var(--accent); }
-    .material-card .mc-arrow { font-size: 14px; color: var(--text3); transition: transform 0.3s; }
+    .material-card:hover { background: #fdfaff; }
+    .material-card .mc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
+    .material-card .mc-title { font-size: 13px; font-weight: 700; color: var(--c-shenlun); }
+    .material-card .mc-arrow { font-size: 13px; color: var(--text3); transition: transform 0.3s; }
     .material-card.expanded .mc-arrow { transform: rotate(180deg); }
-    .material-card .mc-summary { font-size: 13px; color: var(--text2); line-height: 1.5; }
-    .material-card .mc-detail {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out;
-    }
+    .material-card .mc-summary { font-size: 12px; color: var(--text2); line-height: 1.5; }
+    .material-card .mc-detail { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
     .material-card.expanded .mc-detail { max-height: 3000px; }
-    .material-card .mc-content {
-      padding-top: 12px;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--text);
-      border-top: 1px solid rgba(255,255,255,0.05);
-      margin-top: 10px;
-    }
-    .material-card .mc-section { margin-bottom: 10px; }
-    .material-card .mc-section h5 { font-size: 13px; color: var(--gold); margin-bottom: 4px; font-weight: 700; }
-    .material-card .mc-section p { font-size: 13px; color: var(--text2); line-height: 1.7; }
-    .material-card .mc-quote {
-      padding: 10px 12px;
-      background: rgba(129,140,248,0.05);
-      border-radius: 8px;
-      border-left: 2px solid var(--accent);
-      font-size: 13px;
-      color: var(--text);
-      line-height: 1.6;
-      margin-top: 8px;
-      font-style: italic;
-    }
-    .material-card .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-    .material-card .tag { font-size: 11px; padding: 3px 10px; background: rgba(129,140,248,0.08); border-radius: 6px; color: var(--accent); }
+    .material-card .mc-content { padding-top: 10px; font-size: 12px; line-height: 1.7; color: var(--text); border-top: 1px solid var(--border); margin-top: 10px; }
+    .material-card .mc-section { margin-bottom: 8px; }
+    .material-card .mc-section h5 { font-size: 12px; color: var(--c-shenlun); margin-bottom: 3px; font-weight: 700; }
+    .material-card .mc-section p { font-size: 12px; color: var(--text2); line-height: 1.6; }
+    .material-card .mc-quote { padding: 9px 11px; background: rgba(181,141,241,0.05); border-radius: 8px; border-left: 2px solid var(--c-shenlun); font-size: 12px; color: var(--text); line-height: 1.6; margin-top: 6px; font-style: italic; }
+    .material-card .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+    .material-card .tag { font-size: 10px; padding: 2px 8px; background: rgba(181,141,241,0.08); border-radius: 5px; color: var(--c-shenlun); }
 
-    .category-tabs {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 12px;
-      overflow-x: auto;
-      padding-bottom: 2px;
-    }
+    .category-tabs { display: flex; gap: 6px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 2px; }
     .category-tabs::-webkit-scrollbar { display: none; }
-    .cat-tab {
-      flex: 0 0 auto;
-      padding: 7px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.07);
-      background: var(--surface);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--text2);
-      font-family: inherit;
-      white-space: nowrap;
-    }
-    .cat-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .cat-tab { flex: 0 0 auto; padding: 6px 12px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); font-size: 12px; font-weight: 600; cursor: pointer; color: var(--text2); font-family: inherit; white-space: nowrap; box-shadow: var(--shadow-sm); }
+    .cat-tab.active { background: var(--c-shenlun); color: #fff; border-color: var(--c-shenlun); }
+    #page-shizheng .cat-tab.active { background: var(--c-shizheng); border-color: var(--c-shizheng); }
 
-    /* ===== 模块专属卡片配色 ===== */
-    /* 成功日记 — 金色 */
-    #page-success .streak-badge { border-color: rgba(245,158,11,0.2); }
-    #page-success .timeline::before { background: linear-gradient(to bottom, var(--gold), var(--accent), transparent); }
-    #page-success .timeline-dot { background: var(--gold) !important; }
-    /* 行测刷题 — 蓝色 */
+    /* 模块专属配色 */
     #page-xingce .section-title { color: var(--c-xingce); }
     #page-xingce .card { border-left: 3px solid var(--c-xingce); }
     #page-xingce .day-chip.active { background: var(--c-xingce); border-color: var(--c-xingce); }
-    /* 时政推送 — 红色 */
     #page-shizheng .section-title { color: var(--c-shizheng); }
-    #page-shizheng .daily-material { background: linear-gradient(145deg, #2d1a1a, #4a2020); border-color: rgba(248,113,113,0.2); }
-    #page-shizheng .daily-category { color: var(--c-shizheng); }
-    #page-shizheng .daily-section h4 { color: var(--c-shizheng); }
-    #page-shizheng .daily-quote { border-left-color: var(--c-shizheng); }
+    #page-shizheng .card { border-left: 3px solid var(--c-shizheng); }
     #page-shizheng .material-card { border-left-color: var(--c-shizheng); }
     #page-shizheng .material-card .mc-title { color: var(--c-shizheng); }
-    #page-shizheng .material-card .mc-quote { border-left-color: var(--c-shizheng); background: rgba(248,113,113,0.05); }
-    #page-shizheng .material-card .tag { background: rgba(248,113,113,0.1); color: var(--c-shizheng); }
-    #page-shizheng .cat-tab.active { background: var(--c-shizheng); border-color: var(--c-shizheng); }
-    #page-shizheng .card { border-left: 3px solid var(--c-shizheng); }
-    /* 申论素材 — 紫色 */
+    #page-shizheng .material-card .mc-quote { border-left-color: var(--c-shizheng); background: rgba(248,113,113,0.04); }
+    #page-shizheng .material-card .tag { background: rgba(248,113,113,0.08); color: var(--c-shizheng); }
     #page-shenlun .section-title { color: var(--c-shenlun); }
     #page-shenlun .card { border-left: 3px solid var(--c-shenlun); }
-    #page-shenlun .cat-tab.active { background: var(--c-shenlun); border-color: var(--c-shenlun); }
-    /* 运动 — 绿色 */
     #page-sport .section-title { color: var(--c-sport); }
     #page-sport .card { border-left: 3px solid var(--c-sport); }
     #page-sport .day-chip.active { background: var(--c-sport); border-color: var(--c-sport); }
-    /* 养狗日记 — 青色 */
     #page-diary .section-title { color: var(--c-diary); }
     #page-diary .card { border-left: 3px solid var(--c-diary); }
     #page-diary .day-chip.active { background: var(--c-diary); border-color: var(--c-diary); }
 
     .toast {
-      position: fixed; bottom: 110px; left: 50%; transform: translateX(-50%);
-      background: var(--surface2); color: var(--text); padding: 10px 20px;
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: rgba(61,61,78,0.92); color: #fff; padding: 10px 20px;
       border-radius: 20px; font-size: 13px; z-index: 200; opacity: 0;
-      transition: opacity 0.3s; pointer-events: none; border: 1px solid rgba(255,255,255,0.06);
+      transition: opacity 0.3s; pointer-events: none; box-shadow: var(--shadow);
     }
     .toast.show { opacity: 1; }
-    .empty-state { text-align: center; padding: 32px 20px; color: var(--text3); }
-    .empty-state .empty-icon { font-size: 44px; margin-bottom: 8px; }
-    .empty-state p { font-size: 14px; }
+    .empty-state { text-align: center; padding: 28px 20px; color: var(--text3); }
+    .empty-state .empty-icon { font-size: 40px; margin-bottom: 6px; }
+    .empty-state p { font-size: 13px; }
+
+    .page { display: none; }
+    .page.active { display: block; }
   </style>
 </head>
 <body>
-  <div class="ambient">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-  </div>
-
-  <div class="container">
-    <div class="top-bar">
-      <div class="greeting" id="greetingText">下午好，<strong>追光者</strong> 👋</div>
-      <div class="avatar">🛤</div>
-    </div>
-
-    <div class="hero-card">
-      <div class="hero-time" id="liveClock">00:00:00</div>
-      <div class="hero-date" id="liveDate"></div>
-      <div class="hero-motto"><span id="mottoIcon">💪</span> <span id="mottoText">每一天的努力，都是上岸的阶梯。</span></div>
-    </div>
-
-    <!-- PAGE: SUCCESS -->
-    <div class="page active" id="page-success">
-      <div class="streak-badge">
-        <span class="streak-fire">🔥</span>
-        <div class="streak-info">
-          <div class="streak-count" id="streakCount">0</div>
-          <div class="streak-label">天连续成功记录</div>
-        </div>
-        <div style="text-align:right;"><div style="font-size:13px;color:var(--text2);" id="totalSuccess">共 0 条</div></div>
+  <div class="app">
+    <!-- 左侧导航 -->
+    <nav class="sidebar">
+      <div class="app-logo">🛤</div>
+      <div class="app-name">道路的前面<br>还是道路</div>
+      <div class="nav-list">
+        <button class="nav-btn active" data-page="success"><span class="nav-icon">⭐</span>成功日记</button>
+        <button class="nav-btn" data-page="xingce"><span class="nav-icon">📖</span>行测刷题</button>
+        <button class="nav-btn" data-page="shizheng"><span class="nav-icon">📰</span>时政推送</button>
+        <button class="nav-btn" data-page="shenlun"><span class="nav-icon">✍️</span>申论素材</button>
+        <button class="nav-btn" data-page="sport"><span class="nav-icon">🏃</span>运动</button>
+        <button class="nav-btn" data-page="diary"><span class="nav-icon">🐶</span>养狗</button>
       </div>
-      <div class="today-card">
-        <div class="card-title">⭐ 今天我做成的事</div>
-        <div class="card-subtitle">哪怕再小，也值得被记住</div>
-        <textarea class="today-input" id="successInput" placeholder="比如：今天坚持刷了50道行测题 / 早起成功 / 带桃子散步 / 读完一篇申论范文……" data-field="success_today"></textarea>
-        <div class="save-indicator" id="saveIndicator">✅ 已自动保存</div>
-        <div class="quick-prompts">
-          <span class="quick-prompt" onclick="fillPrompt('坚持完成了今日学习计划')">📚 完成学习</span>
-          <span class="quick-prompt" onclick="fillPrompt('今天运动了，感觉很好')">🏃 运动打卡</span>
-          <span class="quick-prompt" onclick="fillPrompt('早起成功，拥抱了新的一天')">🌅 早起成功</span>
-          <span class="quick-prompt" onclick="fillPrompt('认真陪了桃子和椰子')">🐶 陪狗狗</span>
-        </div>
-      </div>
-      <div class="timeline-title">📜 成功记录</div>
-      <div class="timeline" id="successTimeline">
-        <div class="empty-state"><div class="empty-icon">✨</div><p>每一天的成功都值得被铭记</p><p style="font-size:13px;margin-top:4px;">写下今天的第一条吧</p></div>
-      </div>
-    </div>
+    </nav>
 
-    <!-- PAGE: XINGCE -->
-    <div class="page" id="page-xingce">
-      <div class="section-title">📖 行测刷题打卡</div>
-      <div class="day-chips" id="xcDayChips"></div>
-      <div class="card"><h3>📝 言语理解</h3><table class="mini">
-        <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="yy_volume"></td></tr>
-        <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="yy_accuracy"></td></tr>
-        <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="yy_wrong"></td></tr>
-        <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="yy_review"></td></tr>
-      </table></div>
-      <div class="card"><h3>🧩 判断推理</h3><table class="mini">
-        <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="pd_volume"></td></tr>
-        <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="pd_accuracy"></td></tr>
-        <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="pd_wrong"></td></tr>
-        <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="pd_review"></td></tr>
-      </table></div>
-      <div class="card"><h3>🔢 数量关系</h3><table class="mini">
-        <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="sl_volume"></td></tr>
-        <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="sl_accuracy"></td></tr>
-        <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="sl_wrong"></td></tr>
-        <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="sl_review"></td></tr>
-      </table></div>
-      <div class="card"><h3>📊 资料分析</h3><table class="mini">
-        <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="zl_volume"></td></tr>
-        <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="zl_accuracy"></td></tr>
-        <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="zl_wrong"></td></tr>
-        <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="zl_review"></td></tr>
-      </table></div>
-    </div>
-
-    <!-- PAGE: SHIZHENG -->
-    <div class="page" id="page-shizheng">
-      <div class="section-title">📰 时政推送</div>
-
-      <!-- 每日时政推送 -->
-      <div class="daily-material" id="dailyShizheng">
-        <div class="daily-header">
-          <span class="daily-icon">📌</span>
-          <div class="daily-title"><h3>今日时政推送</h3><div class="daily-sub">每日精选 · 考点拆解</div></div>
-        </div>
-        <div class="daily-category" id="szCategory">全国热点</div>
-        <div class="daily-content" id="szTitle">2026年中央一号文件聚焦乡村全面振兴</div>
-        <div class="daily-section"><h4>📖 热点背景</h4><p id="szBackground">2026年中央一号文件持续聚焦"三农"工作，提出全面推进乡村振兴，加快建设农业强国。强调保障粮食安全、防止规模性返贫两条底线，推进乡村发展、乡村建设、乡村治理。</p></div>
-        <div class="daily-section"><h4>✍️ 考点链接</h4><p id="szKaodian">适用于"乡村振兴""三农问题""共同富裕""粮食安全""城乡融合发展"等申论/行测常识考点。常考题型：归纳概括乡村发展举措、提出对策题（如何推进乡村振兴）。</p></div>
-        <div class="daily-section"><h4>💡 答题话术</h4><p id="szUsage">① 坚持农业农村优先发展，把解决好"三农"问题作为全党工作重中之重。② 全面推进乡村产业、人才、文化、生态、组织"五个振兴"。③ 牢牢守住十八亿亩耕地红线，确保中国人的饭碗牢牢端在自己手中。</p></div>
-        <div class="daily-quote" id="szQuote">"民族要复兴，乡村必振兴。全面建设社会主义现代化国家，最艰巨最繁重的任务仍然在农村。"</div>
+    <!-- 主内容区 -->
+    <main class="main">
+      <div class="top-bar">
+        <div class="greeting" id="greetingText">下午好，<strong>追光者</strong> 👋</div>
+        <div class="avatar">🛤</div>
       </div>
 
-      <!-- 分类筛选 -->
-      <div class="category-tabs" id="szCategoryTabs">
-        <button class="cat-tab active" data-cat="all">全部</button>
-        <button class="cat-tab" data-cat="全国">🇨🇳 全国热点</button>
-        <button class="cat-tab" data-cat="江苏">🏛 江苏特色</button>
+      <div class="hero-card">
+        <div class="hero-time" id="liveClock">00:00:00</div>
+        <div class="hero-date" id="liveDate"></div>
+        <div class="hero-motto"><span id="mottoIcon">💪</span> <span id="mottoText">每一天的努力，都是上岸的阶梯。</span></div>
       </div>
 
-      <!-- 时政知识库 -->
-      <div id="shizhengLibrary"></div>
-
-      <!-- 我的时政笔记 -->
-      <div class="card">
-        <h3>📝 我的时政笔记</h3>
-        <div id="shizhengNotes"></div>
-        <button class="add-btn" onclick="addShizhengNote()">+ 添加笔记</button>
-      </div>
-    </div>
-
-    <!-- PAGE: SHENLUN -->
-    <div class="page" id="page-shenlun">
-      <div class="section-title">✍️ 申论素材积累</div>
-
-      <!-- 每日申论素材 -->
-      <div class="daily-material" id="dailyMaterial">
-        <div class="daily-header">
-          <span class="daily-icon">📌</span>
-          <div class="daily-title"><h3>今日申论素材</h3><div class="daily-sub">每日精选 · 深度拆解</div></div>
-        </div>
-        <div class="daily-category" id="dailyCategory">生态环境保护</div>
-        <div class="daily-content" id="dailyTitle">太湖综合治理</div>
-        <div class="daily-section"><h4>📖 案例背景</h4><p id="dailyBackground">太湖流域是长三角地区重要的生态屏障。经过多年综合治理，太湖水质持续改善，蓝藻水华得到有效控制，成为全国湖泊生态修复的典范。</p></div>
-        <div class="daily-section"><h4>✍️ 答题话术</h4><p id="dailyUsage">可用于"绿色发展""生态文明建设""人与自然和谐共生"等主题。论证时可结合"久久为功""系统治理""生态惠民"等关键词。</p></div>
-        <div class="daily-section"><h4>🌟 金句摘录</h4><div class="daily-quote" id="dailyQuote">"绿水青山就是金山银山。太湖治理实践证明，生态保护与经济发展并非对立，而是可以相互促进、相得益彰。"</div></div>
-      </div>
-
-      <!-- 框架速查 -->
-      <div class="card">
-        <h3>🛠 唐棣答题框架速查</h3>
-        <div class="fw-item"><div class="fw-type">📋 归纳概括</div><div class="fw-desc">总括句 + 分条列点（关键词前置，材料原文优先）</div></div>
-        <div class="fw-item"><div class="fw-type">🔍 综合分析</div><div class="fw-desc">释义/表态 → 多角度分析 → 总结对策</div></div>
-        <div class="fw-item"><div class="fw-type">💡 提出对策</div><div class="fw-desc">软手段（宣传引导）+ 硬手段（制度监管）</div></div>
-        <div class="fw-item"><div class="fw-type">📄 贯彻执行</div><div class="fw-desc">背景目的 → 主体内容 → 结尾呼吁</div></div>
-        <div class="fw-item"><div class="fw-type">✏️ 文章写作</div><div class="fw-desc">标题亮眼 → 开头破题 → 分论点递进 → 结尾升华</div></div>
-      </div>
-
-      <!-- 分类筛选 -->
-      <div class="category-tabs" id="categoryTabs">
-        <button class="cat-tab active" data-cat="all">全部</button>
-        <button class="cat-tab" data-cat="生态">🌿 生态</button>
-        <button class="cat-tab" data-cat="治理">🏘 治理</button>
-        <button class="cat-tab" data-cat="经济">⚙ 经济</button>
-        <button class="cat-tab" data-cat="文化">📖 文化</button>
-      </div>
-
-      <!-- 素材库 -->
-      <div id="materialLibrary"></div>
-
-      <!-- 我的素材笔记 -->
-      <div class="card">
-        <h3>✏️ 我的素材笔记</h3>
-        <div id="shenlunNotes"></div>
-        <button class="add-btn" onclick="addShenlunNote()">+ 添加素材</button>
-      </div>
-    </div>
-
-    <!-- PAGE: SPORT -->
-    <div class="page" id="page-sport">
-      <div class="section-title">🏃 运动目标</div>
-      <div class="day-chips" id="spDayChips"></div>
-      <div class="card"><h3>🎯 今日运动</h3><table class="mini">
-        <tr><td>项目</td><td><input placeholder="跑步/跳绳/健身/散步..." data-field="sport_type"></td></tr>
-        <tr><td>时长</td><td><input placeholder="分钟..." data-field="sport_duration"></td></tr>
-        <tr><td>热量</td><td><input placeholder="大卡（可选）..." data-field="sport_calories"></td></tr>
-        <tr><td>感受</td><td><input placeholder="状态如何..." data-field="sport_feel"></td></tr>
-      </table></div>
-      <div class="card"><h3>📊 本周概览</h3><div id="sportWeekSummary" style="font-size:14px;color:var(--text2);"></div></div>
-      <div class="card"><h3>🎯 月度目标</h3>
-        <div class="goal-row">🏃 每周 ≥ 4 次<input placeholder="本周完成次数..." data-field="goal_weekly_count"></div>
-        <div class="goal-row">⏱ 每次 ≥ 30 分钟<input placeholder="平均时长..." data-field="goal_avg_duration"></div>
-        <div class="goal-row">💧 饮水 ≥ 1.5L<input placeholder="今日饮水量..." data-field="goal_water"></div>
-      </div>
-    </div>
-
-    <!-- PAGE: DIARY -->
-    <div class="page" id="page-diary">
-      <div class="section-title">🐶 养狗日记</div>
-      <div class="day-chips" id="dyDayChips"></div>
-      <div class="card">
-        <h3>🐶 桃子</h3>
-        <div class="pet-row">
-          <div class="pet-photo" id="taoziPhoto" onclick="document.getElementById('taoziPhotoInput').click()">
-            <span class="ph">📸</span><span class="pl">今日照片</span>
-            <span class="pdel" onclick="event.stopPropagation();deletePhoto('taozi')">✕</span>
+      <!-- PAGE: SUCCESS -->
+      <div class="page active" id="page-success">
+        <!-- 宠物相册 -->
+        <div class="pet-gallery">
+          <div class="pet-gallery-title">🐾 我的毛孩子们</div>
+          <div class="pet-photos">
+            <div class="pet-frame"><img src="images/taozi.jpg" alt="桃子"><span class="pet-name">🐶 桃子</span></div>
+            <div class="pet-frame"><img src="images/yezi.jpg" alt="椰子"><span class="pet-name">🐾 椰子</span></div>
           </div>
-          <input type="file" id="taoziPhotoInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoUpload('taozi', this)">
-          <div class="pet-info"><div class="pname">今日大事记</div><textarea placeholder="记录桃子今天的重要事情..." data-field="taozi_events"></textarea></div>
         </div>
-      </div>
-      <div class="card">
-        <h3>🐾 椰子（幼犬）</h3>
-        <div class="pet-row">
-          <div class="pet-photo" id="yeziPhoto" onclick="document.getElementById('yeziPhotoInput').click()">
-            <span class="ph">📸</span><span class="pl">今日照片</span>
-            <span class="pdel" onclick="event.stopPropagation();deletePhoto('yezi')">✕</span>
-          </div>
-          <input type="file" id="yeziPhotoInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoUpload('yezi', this)">
-          <div class="pet-info"><div class="pname">今日大事记</div><textarea placeholder="记录椰子今天的重要事情..." data-field="yezi_events"></textarea></div>
-        </div>
-      </div>
-      <div class="card">
-        <h3>📋 宠物大事记档案</h3>
-        <div id="petArchive"></div>
-        <button class="add-btn" onclick="addPetArchive()">+ 添加档案</button>
-      </div>
-    </div>
-  </div>
 
-  <nav class="bottom-nav">
-    <button class="nav-btn active" data-page="success"><span class="nav-icon">⭐</span>成功日记</button>
-    <button class="nav-btn" data-page="xingce"><span class="nav-icon">📖</span>行测刷题</button>
-    <button class="nav-btn" data-page="shizheng"><span class="nav-icon">📰</span>时政推送</button>
-    <button class="nav-btn" data-page="shenlun"><span class="nav-icon">✍️</span>申论素材</button>
-    <button class="nav-btn" data-page="sport"><span class="nav-icon">🏃</span>运动</button>
-    <button class="nav-btn" data-page="diary"><span class="nav-icon">🐶</span>养狗</button>
-  </nav>
+        <div class="streak-badge">
+          <span class="streak-fire">🔥</span>
+          <div class="streak-info">
+            <div class="streak-count" id="streakCount">0</div>
+            <div class="streak-label">天连续成功记录</div>
+          </div>
+          <div style="text-align:right;"><div style="font-size:12px;color:var(--text2);" id="totalSuccess">共 0 条</div></div>
+        </div>
+        <div class="today-card">
+          <div class="card-title">⭐ 今天我做成的事</div>
+          <div class="card-subtitle">哪怕再小，也值得被记住</div>
+          <textarea class="today-input" id="successInput" placeholder="比如：今天坚持刷了50道行测题 / 早起成功 / 带桃子散步 / 读完一篇申论范文……" data-field="success_today"></textarea>
+          <div class="save-indicator" id="saveIndicator">✅ 已自动保存</div>
+          <div class="quick-prompts">
+            <span class="quick-prompt" onclick="fillPrompt('坚持完成了今日学习计划')">📚 完成学习</span>
+            <span class="quick-prompt" onclick="fillPrompt('今天运动了，感觉很好')">🏃 运动打卡</span>
+            <span class="quick-prompt" onclick="fillPrompt('早起成功，拥抱了新的一天')">🌅 早起成功</span>
+            <span class="quick-prompt" onclick="fillPrompt('认真陪了桃子和椰子')">🐶 陪狗狗</span>
+          </div>
+        </div>
+        <div class="timeline-title">📜 成功记录</div>
+        <div class="timeline" id="successTimeline">
+          <div class="empty-state"><div class="empty-icon">✨</div><p>每一天的成功都值得被铭记</p><p style="font-size:13px;margin-top:4px;">写下今天的第一条吧</p></div>
+        </div>
+      </div>
+
+      <!-- PAGE: XINGCE -->
+      <div class="page" id="page-xingce">
+        <div class="section-title">📖 行测刷题打卡</div>
+        <div class="day-chips" id="xcDayChips"></div>
+        <div class="card"><h3>📝 言语理解</h3><table class="mini">
+          <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="yy_volume"></td></tr>
+          <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="yy_accuracy"></td></tr>
+          <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="yy_wrong"></td></tr>
+          <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="yy_review"></td></tr>
+        </table></div>
+        <div class="card"><h3>🧩 判断推理</h3><table class="mini">
+          <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="pd_volume"></td></tr>
+          <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="pd_accuracy"></td></tr>
+          <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="pd_wrong"></td></tr>
+          <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="pd_review"></td></tr>
+        </table></div>
+        <div class="card"><h3>🔢 数量关系</h3><table class="mini">
+          <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="sl_volume"></td></tr>
+          <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="sl_accuracy"></td></tr>
+          <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="sl_wrong"></td></tr>
+          <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="sl_review"></td></tr>
+        </table></div>
+        <div class="card"><h3>📊 资料分析</h3><table class="mini">
+          <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="zl_volume"></td></tr>
+          <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="zl_accuracy"></td></tr>
+          <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="zl_wrong"></td></tr>
+          <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="zl_review"></td></tr>
+        </table></div>
+      </div>
+
+      <!-- PAGE: SHIZHENG -->
+      <div class="page" id="page-shizheng">
+        <div class="section-title">📰 时政推送</div>
+        <div class="daily-material" id="dailyShizheng">
+          <div class="daily-header">
+            <span class="daily-icon">📌</span>
+            <div class="daily-title"><h3>今日时政推送</h3><div class="daily-sub">每日精选 · 考点拆解</div></div>
+          </div>
+          <div class="daily-category" id="szCategory">全国热点</div>
+          <div class="daily-content" id="szTitle">2026年中央一号文件聚焦乡村全面振兴</div>
+          <div class="daily-section"><h4>📖 热点背景</h4><p id="szBackground">2026年中央一号文件持续聚焦"三农"工作，提出全面推进乡村振兴，加快建设农业强国。</p></div>
+          <div class="daily-section"><h4>✍️ 考点链接</h4><p id="szKaodian">适用于"乡村振兴""三农问题""共同富裕"等申论/行测常识考点。</p></div>
+          <div class="daily-section"><h4>💡 答题话术</h4><p id="szUsage">① 坚持农业农村优先发展...</p></div>
+          <div class="daily-quote" id="szQuote">"民族要复兴，乡村必振兴。"</div>
+        </div>
+        <div class="category-tabs" id="szCategoryTabs">
+          <button class="cat-tab active" data-cat="all">全部</button>
+          <button class="cat-tab" data-cat="全国">🇨🇳 全国热点</button>
+          <button class="cat-tab" data-cat="江苏">🏛 江苏特色</button>
+        </div>
+        <div id="shizhengLibrary"></div>
+        <div class="card">
+          <h3>📝 我的时政笔记</h3>
+          <div id="shizhengNotes"></div>
+          <button class="add-btn" onclick="addShizhengNote()">+ 添加笔记</button>
+        </div>
+      </div>
+
+      <!-- PAGE: SHENLUN -->
+      <div class="page" id="page-shenlun">
+        <div class="section-title">✍️ 申论素材积累</div>
+        <div class="daily-material" id="dailyMaterial">
+          <div class="daily-header">
+            <span class="daily-icon">📌</span>
+            <div class="daily-title"><h3>今日申论素材</h3><div class="daily-sub">每日精选 · 深度拆解</div></div>
+          </div>
+          <div class="daily-category" id="dailyCategory">生态环境保护</div>
+          <div class="daily-content" id="dailyTitle">太湖综合治理</div>
+          <div class="daily-section"><h4>📖 案例背景</h4><p id="dailyBackground">太湖流域是长三角地区重要的生态屏障。</p></div>
+          <div class="daily-section"><h4>✍️ 答题话术</h4><p id="dailyUsage">可用于"绿色发展"...</p></div>
+          <div class="daily-section"><h4>🌟 金句摘录</h4><div class="daily-quote" id="dailyQuote">"绿水青山就是金山银山。"</div></div>
+        </div>
+        <div class="card">
+          <h3>🛠 唐棣答题框架速查</h3>
+          <div class="fw-item"><div class="fw-type">📋 归纳概括</div><div class="fw-desc">总括句 + 分条列点（关键词前置，材料原文优先）</div></div>
+          <div class="fw-item"><div class="fw-type">🔍 综合分析</div><div class="fw-desc">释义/表态 → 多角度分析 → 总结对策</div></div>
+          <div class="fw-item"><div class="fw-type">💡 提出对策</div><div class="fw-desc">软手段（宣传引导）+ 硬手段（制度监管）</div></div>
+          <div class="fw-item"><div class="fw-type">📄 贯彻执行</div><div class="fw-desc">背景目的 → 主体内容 → 结尾呼吁</div></div>
+          <div class="fw-item"><div class="fw-type">✏️ 文章写作</div><div class="fw-desc">标题亮眼 → 开头破题 → 分论点递进 → 结尾升华</div></div>
+        </div>
+        <div class="category-tabs" id="categoryTabs">
+          <button class="cat-tab active" data-cat="all">全部</button>
+          <button class="cat-tab" data-cat="生态">🌿 生态</button>
+          <button class="cat-tab" data-cat="治理">🏘 治理</button>
+          <button class="cat-tab" data-cat="经济">⚙ 经济</button>
+          <button class="cat-tab" data-cat="文化">📖 文化</button>
+        </div>
+        <div id="materialLibrary"></div>
+        <div class="card">
+          <h3>✏️ 我的素材笔记</h3>
+          <div id="shenlunNotes"></div>
+          <button class="add-btn" onclick="addShenlunNote()">+ 添加素材</button>
+        </div>
+      </div>
+
+      <!-- PAGE: SPORT -->
+      <div class="page" id="page-sport">
+        <div class="section-title">🏃 运动目标</div>
+        <div class="day-chips" id="spDayChips"></div>
+        <div class="card"><h3>🎯 今日运动</h3><table class="mini">
+          <tr><td>项目</td><td><input placeholder="跑步/跳绳/健身/散步..." data-field="sport_type"></td></tr>
+          <tr><td>时长</td><td><input placeholder="分钟..." data-field="sport_duration"></td></tr>
+          <tr><td>热量</td><td><input placeholder="大卡（可选）..." data-field="sport_calories"></td></tr>
+          <tr><td>感受</td><td><input placeholder="状态如何..." data-field="sport_feel"></td></tr>
+        </table></div>
+        <div class="card"><h3>📊 本周概览</h3><div id="sportWeekSummary" style="font-size:13px;color:var(--text2);"></div></div>
+        <div class="card"><h3>🎯 月度目标</h3>
+          <div class="goal-row">🏃 每周 ≥ 4 次<input placeholder="本周完成次数..." data-field="goal_weekly_count"></div>
+          <div class="goal-row">⏱ 每次 ≥ 30 分钟<input placeholder="平均时长..." data-field="goal_avg_duration"></div>
+          <div class="goal-row">💧 饮水 ≥ 1.5L<input placeholder="今日饮水量..." data-field="goal_water"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: DIARY -->
+      <div class="page" id="page-diary">
+        <div class="section-title">🐶 养狗日记</div>
+        <div class="day-chips" id="dyDayChips"></div>
+        <div class="card">
+          <h3>🐶 桃子</h3>
+          <div class="pet-row">
+            <div class="pet-photo" id="taoziPhoto" onclick="document.getElementById('taoziPhotoInput').click()">
+              <span class="ph">📸</span><span class="pl">今日照片</span>
+              <span class="pdel" onclick="event.stopPropagation();deletePhoto('taozi')">✕</span>
+            </div>
+            <input type="file" id="taoziPhotoInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoUpload('taozi', this)">
+            <div class="pet-info"><div class="pname">今日大事记</div><textarea placeholder="记录桃子今天的重要事情..." data-field="taozi_events"></textarea></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>🐾 椰子（幼犬）</h3>
+          <div class="pet-row">
+            <div class="pet-photo" id="yeziPhoto" onclick="document.getElementById('yeziPhotoInput').click()">
+              <span class="ph">📸</span><span class="pl">今日照片</span>
+              <span class="pdel" onclick="event.stopPropagation();deletePhoto('yezi')">✕</span>
+            </div>
+            <input type="file" id="yeziPhotoInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoUpload('yezi', this)">
+            <div class="pet-info"><div class="pname">今日大事记</div><textarea placeholder="记录椰子今天的重要事情..." data-field="yezi_events"></textarea></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>📋 宠物大事记档案</h3>
+          <div id="petArchive"></div>
+          <button class="add-btn" onclick="addPetArchive()">+ 添加档案</button>
+        </div>
+      </div>
+    </main>
+  </div>
 
   <div class="toast" id="toast"></div>
 
   <script>
+
     const today = new Date();
     const weekDays = ['周日','周一','周二','周三','周四','周五','周六'];
     const todayKey = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
@@ -898,7 +824,7 @@
     }
 
     // ===== NAV =====
-    document.querySelector('.bottom-nav').addEventListener('click', function(e) {
+    document.querySelector('.sidebar').addEventListener('click', function(e) {
       const btn = e.target.closest('.nav-btn');
       if (!btn) return;
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -1169,6 +1095,7 @@
     renderShizhengLibrary();
     refreshAll();
     updateSuccessUI();
+  
   </script>
 </body>
 </html>

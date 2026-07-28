@@ -1,12 +1,12 @@
 {
-  "name": "公考自律 & 宠物养护工作台",
-  "short_name": "公考工作台",
-  "description": "公考备考打卡、时政积累、宠物养护一站式工作台",
+  "name": "道路的前面还是道路",
+  "short_name": "道路工作台",
+  "description": "公考备考打卡、时政申论积累、宠物养护一站式可爱工作台",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f5f5f7",
-  "theme_color": "#4F46E5",
+  "background_color": "#f7f0ff",
+  "theme_color": "#b58df1",
   "icons": [
     {
       "src": "/icon-192.png",
