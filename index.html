@@ -383,14 +383,32 @@
     <!-- PAGE: SHIZHENG -->
     <div class="page" id="page-shizheng">
       <div class="section-title">📰 时政推送</div>
-      <div class="card">
-        <h3>🇨🇳 全国考公时政热点 <button class="refresh-btn" style="margin-left:auto;" onclick="refreshNews('national')">🔄 刷新</button></h3>
-        <div id="nationalNews"><div style="color:var(--text3);font-size:14px;padding:8px 0;">点击刷新获取最新时政热点</div></div>
+
+      <!-- 每日时政推送 -->
+      <div class="daily-material" id="dailyShizheng">
+        <div class="daily-header">
+          <span class="daily-icon">📌</span>
+          <div class="daily-title"><h3>今日时政推送</h3><div class="daily-sub">每日精选 · 考点拆解</div></div>
+        </div>
+        <div class="daily-category" id="szCategory">全国热点</div>
+        <div class="daily-content" id="szTitle">2026年中央一号文件聚焦乡村全面振兴</div>
+        <div class="daily-section"><h4>📖 热点背景</h4><p id="szBackground">2026年中央一号文件持续聚焦"三农"工作，提出全面推进乡村振兴，加快建设农业强国。强调保障粮食安全、防止规模性返贫两条底线，推进乡村发展、乡村建设、乡村治理。</p></div>
+        <div class="daily-section"><h4>✍️ 考点链接</h4><p id="szKaodian">适用于"乡村振兴""三农问题""共同富裕""粮食安全""城乡融合发展"等申论/行测常识考点。常考题型：归纳概括乡村发展举措、提出对策题（如何推进乡村振兴）。</p></div>
+        <div class="daily-section"><h4>💡 答题话术</h4><p id="szUsage">① 坚持农业农村优先发展，把解决好"三农"问题作为全党工作重中之重。② 全面推进乡村产业、人才、文化、生态、组织"五个振兴"。③ 牢牢守住十八亿亩耕地红线，确保中国人的饭碗牢牢端在自己手中。</p></div>
+        <div class="daily-quote" id="szQuote">"民族要复兴，乡村必振兴。全面建设社会主义现代化国家，最艰巨最繁重的任务仍然在农村。"</div>
       </div>
-      <div class="card">
-        <h3>🏛 江苏特色时政热点 <button class="refresh-btn" style="margin-left:auto;" onclick="refreshNews('jiangsu')">🔄 刷新</button></h3>
-        <div id="jiangsuNews"><div style="color:var(--text3);font-size:14px;padding:8px 0;">点击刷新获取江苏特色时政</div></div>
+
+      <!-- 分类筛选 -->
+      <div class="category-tabs" id="szCategoryTabs">
+        <button class="cat-tab active" data-cat="all">全部</button>
+        <button class="cat-tab" data-cat="全国">🇨🇳 全国热点</button>
+        <button class="cat-tab" data-cat="江苏">🏛 江苏特色</button>
       </div>
+
+      <!-- 时政知识库 -->
+      <div id="shizhengLibrary"></div>
+
+      <!-- 我的时政笔记 -->
       <div class="card">
         <h3>📝 我的时政笔记</h3>
         <div id="shizhengNotes"></div>
@@ -824,26 +842,176 @@
       if (currentPage === 'diary') renderDayChips('dyDayChips');
       if (currentPage === 'success') updateSuccessUI();
       if (currentPage === 'shenlun') { renderDailyMaterial(); renderMaterialLibrary(); }
+      if (currentPage === 'shizheng') { renderDailyShizheng(); renderShizhengLibrary(); }
     });
 
-    // ===== NEWS =====
-    function refreshNews(type) {
-      if (type === 'national') {
-        document.getElementById('nationalNews').innerHTML = `
-          <div class="info-item"><div class="dot"></div><div class="info-content">2026年中央一号文件聚焦乡村全面振兴<div class="meta">乡村振兴 · 高频考点</div></div></div>
-          <div class="info-item"><div class="dot"></div><div class="info-content">新质生产力成为2026年经济发展核心关键词<div class="meta">经济发展 · 必考热点</div></div></div>
-          <div class="info-item"><div class="dot"></div><div class="info-content">国务院发布《数字中国建设整体布局规划》实施方案<div class="meta">数字经济 · 科技创新</div></div></div>
-          <div class="info-item"><div class="dot"></div><div class="info-content">全国生态环境保护大会强调建设人与自然和谐共生的现代化<div class="meta">生态环保 · 重要论述</div></div></div>
-          <div class="info-item"><div class="dot"></div><div class="info-content">2026年城镇新增就业目标1200万人以上<div class="meta">民生保障 · 数据要点</div></div></div>`;
-      } else {
-        document.getElementById('jiangsuNews').innerHTML = `
-          <div class="info-item"><div class="dot"></div><div class="info-content">江苏省2026年GDP目标增长5.5%以上<div class="meta">省情数据 · 江苏特色</div></div></div>
-          <div class="info-item"><div class="dot"></div><div class="info-content">"1650"产业体系2.0版，新增氢能、低空经济<div class="meta">新质生产力 · 江苏实践</div></div></div>
-          <div class="info-item"><div class="dot"></div><div class="info-content">苏州、南京入选全国首批便民生活圈示范城市<div class="meta">民生服务 · 基层治理</div></div></div>
-          <div class="info-item"><div class="dot"></div><div class="info-content">江苏省考2026年招录规模扩大，基层岗位超60%<div class="meta">公考动态 · 重点关注</div></div></div>
-          <div class="info-item"><div class="dot"></div><div class="info-content">太湖流域水质创近十年最好水平<div class="meta">生态环保 · 江苏案例</div></div></div>`;
+    // ===== 时政推送 =====
+    let szCurrentCat = 'all';
+
+    // 时政素材库 — 每条含完整考点拆解
+    const shizhengMaterials = [
+      {
+        category: '全国',
+        title: '2026年中央一号文件：乡村全面振兴',
+        summary: '持续聚焦"三农"，守住粮食安全和不发生规模性返贫两条底线。',
+        background: '2026年中央一号文件持续聚焦"三农"工作，提出全面推进乡村振兴，加快建设农业强国。文件强调保障粮食安全、防止规模性返贫两条底线，统筹推进乡村发展、乡村建设、乡村治理三大重点任务。',
+        kaodian: '适用于"乡村振兴""三农问题""共同富裕""粮食安全""城乡融合发展"等申论/行测常识考点。常考题型：归纳概括乡村发展举措、提出对策题（如何推进乡村振兴）。',
+        usage: '① 坚持农业农村优先发展，把解决好"三农"问题作为全党工作重中之重。② 全面推进乡村产业、人才、文化、生态、组织"五个振兴"。③ 牢牢守住十八亿亩耕地红线，确保中国人的饭碗牢牢端在自己手中。',
+        quote: '民族要复兴，乡村必振兴。全面建设社会主义现代化国家，最艰巨最繁重的任务仍然在农村。',
+        tags: ['乡村振兴', '三农', '粮食安全']
+      },
+      {
+        category: '全国',
+        title: '新质生产力：2026年经济发展核心引擎',
+        summary: '以科技创新引领产业创新，培育壮大新兴产业和未来产业。',
+        background: '新质生产力是2024年以来中央经济工作的核心概念，2026年进一步深化落实。强调以科技创新为核心驱动力，推动传统产业转型升级，培育人工智能、量子信息、生物制造等未来产业。',
+        kaodian: '适用于"高质量发展""科技创新""产业升级""新发展理念""现代化产业体系"等考点。行测常识判断、申论大作文均可使用。',
+        usage: '① 发展新质生产力是推动高质量发展的内在要求和重要着力点。② 以科技创新引领产业创新，加快实现高水平科技自立自强。③ 因地制宜发展新质生产力，防止一哄而上、泡沫化。',
+        quote: '新质生产力特点是创新，关键在质优，本质是先进生产力。',
+        tags: ['新质生产力', '科技创新', '高质量发展']
+      },
+      {
+        category: '全国',
+        title: '数字中国建设整体布局规划',
+        summary: '国务院发布数字中国建设"2522"整体框架，推动数字化全面发展。',
+        background: '数字中国建设按照"2522"整体框架布局：夯实数字基础设施和数据资源体系"两大基础"，推进数字技术与经济、政治、文化、社会、生态文明建设"五位一体"深度融合，强化数字技术创新体系和数字安全屏障"两大能力"。',
+        kaodian: '适用于"数字经济""数字政府""科技创新""治理现代化"等考点。常考常识判断题：数字中国的"2522"框架具体指什么。',
+        usage: '① 建设数字中国是推进中国式现代化的重要引擎。② 以数据为关键要素，以数字技术与实体经济深度融合为主线。③ 提升数字治理能力，让数据多跑路、群众少跑腿。',
+        quote: '数字化浪潮席卷全球，谁抢占了数字经济的制高点，谁就掌握了未来发展的主动权。',
+        tags: ['数字经济', '科技创新', '数字政府']
+      },
+      {
+        category: '全国',
+        title: '全国生态环境保护大会精神',
+        summary: '建设人与自然和谐共生的现代化，打好污染防治攻坚战。',
+        background: '全国生态环境保护大会强调，我国经济社会发展已进入加快绿色化、低碳化的高质量发展阶段。要正确处理高质量发展和高水平保护的关系，持续深入打好蓝天、碧水、净土保卫战。',
+        kaodian: '适用于"生态文明建设""绿色发展""双碳目标""美丽中国"等考点。是申论高频素材，几乎所有生态类题目都可引用。',
+        usage: '① 绿水青山就是金山银山，保护生态环境就是保护生产力。② 坚持山水林田湖草沙一体化保护和系统治理。③ 推动经济社会发展全面绿色转型。',
+        quote: '环境就是民生，青山就是美丽，蓝天也是幸福。',
+        tags: ['生态文明', '双碳', '美丽中国']
+      },
+      {
+        category: '全国',
+        title: '2026年城镇新增就业目标1200万人',
+        summary: '稳就业列为宏观政策优先目标，重点保障高校毕业生等群体。',
+        background: '2026年政府工作报告将城镇新增就业目标设定为1200万人以上。重点做好高校毕业生、农民工、退役军人等群体就业工作，实施就业优先战略，强化就业优先政策。',
+        kaodian: '适用于"民生保障""就业优先""以人民为中心""社会稳定"等考点。是论证"发展为了人民"的常用论据。',
+        usage: '① 就业是最大的民生工程、民心工程、根基工程。② 坚持就业优先战略，把稳就业摆在更加突出位置。③ 健全就业公共服务体系，完善重点群体就业支持体系。',
+        quote: '民生无小事，枝叶总关情。让每个人都有通过勤奋劳动实现自身发展的机会。',
+        tags: ['民生保障', '就业', '社会稳定']
+      },
+      {
+        category: '全国',
+        title: '中国特色大国外交：构建人类命运共同体',
+        summary: '推动共建"一带一路"高质量发展，倡导全球发展倡议。',
+        background: '2026年中国持续推动构建人类命运共同体，深化"一带一路"合作。全球发展倡议、全球安全倡议、全球文明倡议得到国际社会广泛认同。中国坚定维护多边主义，推动国际秩序朝更加公正合理方向发展。',
+        kaodian: '适用于"对外开放""一带一路""人类命运共同体""国际关系"等考点。行测常识判断常考外交知识点。',
+        usage: '① 坚持对外开放基本国策，推动建设开放型世界经济。② 共建"一带一路"已成为广受欢迎的国际公共产品。③ 弘扬和平、发展、公平、正义、民主、自由的全人类共同价值。',
+        quote: '大道不孤，天下一家。中国的发展离不开世界，世界的繁荣也需要中国。',
+        tags: ['对外开放', '一带一路', '人类命运共同体']
+      },
+      {
+        category: '全国',
+        title: '法治中国建设：全面依法治国深入推进',
+        summary: '完善以宪法为核心的中国特色社会主义法律体系。',
+        background: '2026年法治中国建设持续推进，重点推进国家安全、科技创新、公共卫生等领域立法修法。深化司法体制改革，努力让人民群众在每一个司法案件中感受到公平正义。',
+        kaodian: '适用于"依法治国""法治建设""公平正义""社会治理"等考点。申论法治类题目必备素材。',
+        usage: '① 法治是国家治理体系和治理能力现代化的重要标志。② 坚持依法治国、依法执政、依法行政共同推进。③ 法治是最好的营商环境。',
+        quote: '法者，治之端也。全面依法治国是中国特色社会主义的本质要求和重要保障。',
+        tags: ['法治', '治理现代化', '公平正义']
+      },
+      {
+        category: '江苏',
+        title: '江苏GDP目标增长5.5%以上：经济大省挑大梁',
+        summary: '江苏作为经济大省，在稳定全国经济大局中发挥关键支撑作用。',
+        background: '2026年江苏省GDP增长目标设定为5.5%以上，高于全国平均水平。制造业增加值占GDP比重保持稳定，战略性新兴产业产值占比持续提升。江苏以占全国1%的国土面积，贡献了超过10%的经济总量。',
+        kaodian: '适用于"区域经济发展""江苏特色""高质量发展""制造业"等考点。江苏省考申论常涉及省情数据，需要熟悉江苏经济地位。',
+        usage: '① 经济大省要勇挑大梁，为全国发展大局多作贡献。② 坚持制造业立省不动摇，推动制造业高端化、智能化、绿色化。③ 江苏以实体经济见长，制造业是江苏的"看家本领"。',
+        quote: '江苏作为经济大省，有基础、有条件、有能力为全国大局多作贡献。',
+        tags: ['江苏经济', '省情数据', '制造业']
+      },
+      {
+        category: '江苏',
+        title: '"1650"产业体系2.0版：新增氢能与低空经济',
+        summary: '江苏升级现代产业体系，氢能、低空经济、商业航天等新兴产业成为新增长极。',
+        background: '江苏在原有16个先进制造业集群和50条重点产业链基础上，升级推出"1650"产业体系2.0版。新增氢能、低空经济、商业航天等未来产业方向。南京、苏州、无锡等地加快布局低空经济产业园区。',
+        kaodian: '适用于"新质生产力""产业升级""江苏特色""未来产业"等考点。是江苏申论案例分析的黄金素材。',
+        usage: '① 因地制宜发展新质生产力，构建现代化产业体系。② 抢占未来产业新赛道，培育壮大新增长引擎。③ 推动传统产业"智改数转"，新兴产业聚链成群。',
+        quote: '低空经济是万亿级新蓝海，谁先布局、谁先发力，谁就能抢占发展先机。',
+        tags: ['新质生产力', '产业升级', '低空经济']
+      },
+      {
+        category: '江苏',
+        title: '苏州南京入选全国便民生活圈示范城市',
+        summary: '江苏基层治理创新走在全国前列，一刻钟便民生活圈惠及千万居民。',
+        background: '苏州、南京成功入选全国首批便民生活圈示范城市。以社区居民为服务对象，在步行15分钟范围内配齐购物、餐饮、家政、医疗等基本保障类业态。全省已建成便民生活圈超800个。',
+        kaodian: '适用于"基层治理""民生保障""城市更新""服务型政府"等考点。是论证"以人民为中心"的鲜活案例。',
+        usage: '① 一刻钟便民生活圈，"圈"出的是百姓的幸福生活。② 推进基层治理精细化，打通服务群众"最后一公里"。③ 把群众"急难愁盼"变成政府"履职清单"。',
+        quote: '城市治理的"最后一公里"就在社区。一刻钟不仅是时间距离，更是服务温度。',
+        tags: ['基层治理', '民生', '城市更新']
+      },
+      {
+        category: '江苏',
+        title: '江苏省考2026年招录规模扩大，基层岗位超60%',
+        summary: '江苏公务员招录持续向基层倾斜，县乡一线岗位占比超六成。',
+        background: '2026年江苏省考计划招录公务员9000余人，较上年增加约5%。基层岗位占比超过60%，定向招录服务基层项目人员和应届高校毕业生。专业要求进一步放宽，更多岗位不限专业。',
+        kaodian: '适用于"就业优先""人才队伍建设""基层治理"等考点。对备考江苏省考的考生尤其重要，了解招录趋势有助于选岗策略。',
+        usage: '① 引导人才向基层流动，充实基层治理力量。② 基层是最好的课堂，实践是最好的老师。③ 让年轻干部在基层一线经风雨、见世面、长才干。',
+        quote: '宰相必起于州部，猛将必发于卒伍。基层是年轻干部成长的最好舞台。',
+        tags: ['公考动态', '基层建设', '江苏招录']
+      },
+      {
+        category: '江苏',
+        title: '太湖水质创近十年最好水平：江苏生态治理典范',
+        summary: '太湖流域综合治理成效显著，水质全面改善，蓝藻控制取得突破。',
+        background: '经过持续十多年的综合治理，2026年太湖水质创近十年最好水平，湖体水质稳定在Ⅲ类，部分湖区达到Ⅱ类。总磷、总氮等主要污染物浓度大幅下降，蓝藻水华发生频次和面积持续减少。',
+        kaodian: '适用于"生态文明建设""流域治理""绿色发展""江苏案例"等考点。是江苏省考申论的经典素材，可论证长期坚持、系统治理的重要性。',
+        usage: '① 太湖治理是习近平生态文明思想的生动实践。② 生态治理非一日之功，需要久久为功、持续发力。③ 用最严格制度最严密法治保护生态环境。',
+        quote: '太湖美，美就美在太湖水。十多年治太，换来了太湖的碧波荡漾、鱼翔浅底。',
+        tags: ['生态文明', '太湖治理', '江苏案例']
       }
-      showToast('✅ 已更新');
+    ];
+
+    function renderDailyShizheng() {
+      const idx = (Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000)) % shizhengMaterials.length;
+      const m = shizhengMaterials[idx];
+      document.getElementById('szCategory').textContent = m.category === '全国' ? '🇨🇳 全国热点' : '🏛 江苏特色';
+      document.getElementById('szTitle').textContent = m.title;
+      document.getElementById('szBackground').textContent = m.background;
+      document.getElementById('szKaodian').textContent = m.kaodian;
+      document.getElementById('szUsage').textContent = m.usage;
+      document.getElementById('szQuote').textContent = m.quote;
+    }
+
+    function renderShizhengLibrary() {
+      const filtered = szCurrentCat === 'all' ? shizhengMaterials : shizhengMaterials.filter(m => m.category === szCurrentCat);
+      const el = document.getElementById('shizhengLibrary');
+      el.innerHTML = filtered.map((m, i) => `
+        <div class="material-card" onclick="this.classList.toggle('expanded')">
+          <div class="mc-header">
+            <span class="mc-title">${m.title}</span>
+            <span class="mc-arrow">▼</span>
+          </div>
+          <div class="mc-summary">${m.summary}</div>
+          <div class="mc-detail"><div class="mc-content">
+            <div class="mc-section"><h5>📖 热点背景</h5><p>${m.background}</p></div>
+            <div class="mc-section"><h5>✍️ 考点链接</h5><p>${m.kaodian}</p></div>
+            <div class="mc-section"><h5>💡 答题话术</h5><p>${m.usage}</p></div>
+            <div class="mc-quote">${m.quote}</div>
+            <div class="tags">${m.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+          </div></div>
+        </div>
+      `).join('');
+
+      // 分类筛选点击事件
+      document.getElementById('szCategoryTabs').querySelectorAll('.cat-tab').forEach(btn => {
+        btn.onclick = function() {
+          document.querySelectorAll('#szCategoryTabs .cat-tab').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          szCurrentCat = this.dataset.cat;
+          renderShizhengLibrary();
+        };
+      });
     }
 
     // ===== NOTES =====
@@ -929,6 +1097,8 @@
     loadDayData();
     renderDailyMaterial();
     renderMaterialLibrary();
+    renderDailyShizheng();
+    renderShizhengLibrary();
     refreshAll();
     updateSuccessUI();
   </script>
