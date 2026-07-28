@@ -1018,14 +1018,36 @@
     // ===== PET PHOTOS =====
     function handlePhotoUpload(pet, input) {
       const file = input.files[0]; if (!file) return;
+      // 先用 FileReader 读取，再用 Canvas 压缩
       const reader = new FileReader();
       reader.onload = function(e) {
-        if (!appData[currentDay]) appData[currentDay] = {};
-        appData[currentDay][pet + '_photo'] = e.target.result;
-        save(); loadPhoto(pet, e.target.result);
-        showToast('📸 ' + (pet==='taozi'?'桃子':'椰子') + '照片已保存');
+        const img = new Image();
+        img.onload = function() {
+          // 压缩到最大 400px，jpeg 质量 0.7
+          const canvas = document.createElement('canvas');
+          const maxW = 400, maxH = 400;
+          let w = img.width, h = img.height;
+          if (w > h) { if (w > maxW) { h = h * maxW / w; w = maxW; } }
+          else { if (h > maxH) { w = w * maxH / h; h = maxH; } }
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const compressed = canvas.toDataURL('image/jpeg', 0.7);
+          try {
+            if (!appData[currentDay]) appData[currentDay] = {};
+            appData[currentDay][pet + '_photo'] = compressed;
+            save(); loadPhoto(pet, compressed);
+            showToast('📸 ' + (pet==='taozi'?'桃子':'椰子') + '照片已保存');
+          } catch(err) {
+            showToast('❌ 保存失败，存储空间不足');
+          }
+        };
+        img.onerror = function() { showToast('❌ 图片加载失败，换一张试试'); };
+        img.src = e.target.result;
       };
       reader.readAsDataURL(file);
+      // 清空 input，允许重复选择同一文件
+      input.value = '';
     }
     function loadPhoto(pet, dataUrl) {
       const box = document.getElementById(pet + 'Photo');
