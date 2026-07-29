@@ -29,12 +29,18 @@
       --shadow-sm: 0 2px 10px rgba(139, 92, 246, 0.06);
       --radius: 20px;
       --radius-sm: 14px;
-      --c-success: #ffaa5c;
-      --c-xingce: #6fb3f9;
-      --c-shizheng: #ff8a8a;
-      --c-shenlun: #b58df1;
-      --c-sport: #6ee7b7;
-      --c-diary: #5eead4;
+      --c-success: #ff9a56;
+      --c-success-bg: #fff5f0;
+      --c-xingce: #5b9cf5;
+      --c-xingce-bg: #f0f5ff;
+      --c-shizheng: #ff6b6b;
+      --c-shizheng-bg: #fff0f0;
+      --c-shenlun: #9b72f2;
+      --c-shenlun-bg: #f6f0ff;
+      --c-sport: #4ade80;
+      --c-sport-bg: #f0fff5;
+      --c-diary: #2dd4bf;
+      --c-diary-bg: #f0fffb;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
@@ -73,8 +79,9 @@
       padding: 6px 1px; color: var(--text2); font-size: 9px; font-weight: 600;
       cursor: pointer; transition: all 0.25s; font-family: inherit; position: relative;
     }
-    .nav-btn .nav-icon { font-size: 16px; filter: grayscale(0.2); transition: all 0.25s; }
+    .nav-btn .nav-icon { font-size: 16px; transition: all 0.25s; }
     .nav-btn.active { background: var(--sidebar-active); color: var(--text); box-shadow: var(--shadow-sm); }
+    .nav-btn.active .nav-icon { transform: scale(1.15); }
     .nav-btn.active::after {
       content: ''; position: absolute; right: -3px; top: 50%; transform: translateY(-50%);
       width: 2px; height: 14px; background: var(--c-success); border-radius: 2px 0 0 2px;
@@ -84,7 +91,7 @@
     .nav-btn[data-page="shenlun"].active::after { background: var(--c-shenlun); }
     .nav-btn[data-page="sport"].active::after { background: var(--c-sport); }
     .nav-btn[data-page="diary"].active::after { background: var(--c-diary); }
-    .nav-btn.active .nav-icon { filter: grayscale(0); transform: scale(1.1); }
+    .nav-btn.active .nav-icon { transform: scale(1.15); }
 
     /* 主内容区 */
     .main { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px 14px calc(16px + env(safe-area-inset-bottom, 0)); -webkit-overflow-scrolling: touch; }
@@ -199,9 +206,9 @@
     .add-btn { width: 100%; padding: 10px; border: 1px dashed #ddd6fe; border-radius: var(--radius-sm); background: transparent; color: var(--text3); font-size: 13px; cursor: pointer; font-family: inherit; margin-top: 6px; transition: all 0.2s; }
     .add-btn:active { border-color: var(--c-shenlun); color: var(--c-shenlun); background: rgba(181,141,241,0.05); }
 
-    /* 申论/时政 每日卡片 */
+    /* 申论每日卡片 — 紫色 */
     .daily-material {
-      background: linear-gradient(135deg, #f3e8ff 0%, #fae8ff 100%);
+      background: linear-gradient(135deg, #f6f0ff 0%, #fdf5ff 100%);
       border-radius: var(--radius); padding: 16px; margin-bottom: 14px;
       box-shadow: var(--shadow); border: 1px solid rgba(181,141,241,0.15);
     }
@@ -218,7 +225,8 @@
     .daily-quote { margin-top: 12px; padding: 10px 12px; background: rgba(255,255,255,0.6); border-radius: 10px; border-left: 3px solid var(--c-shenlun); font-size: 12px; line-height: 1.7; color: var(--text2); font-style: italic; }
 
     /* 时政特殊色 */
-    #page-shizheng .daily-material { background: linear-gradient(135deg, #ffe4e6 0%, #fff0f3 100%); border-color: rgba(248,113,113,0.15); }
+    /* 时政每日卡片 — 珊瑚红 */
+    #page-shizheng .daily-material { background: linear-gradient(135deg, #fff0f0 0%, #fff5f5 100%); border-color: rgba(255,107,107,0.2); }
     #page-shizheng .daily-category { background: rgba(248,113,113,0.12); color: var(--c-shizheng); }
     #page-shizheng .daily-section h4 { color: var(--c-shizheng); }
     #page-shizheng .daily-quote { border-left-color: var(--c-shizheng); }
@@ -250,10 +258,38 @@
     .cat-tab.active { background: var(--c-shenlun); color: #fff; border-color: var(--c-shenlun); }
     #page-shizheng .cat-tab.active { background: var(--c-shizheng); border-color: var(--c-shizheng); }
 
-    /* 模块专属配色 */
+    /* ===== 模块专属配色（活泼可爱风） ===== */
+    /* 成功日记 — 暖橙 */
+    #page-success .section-title { color: var(--c-success); }
+    #page-success .card { border-left: 4px solid var(--c-success); background: linear-gradient(135deg, #fff, var(--c-success-bg)); }
+    #page-success .today-card { border-top-color: var(--c-success); }
+    /* 行测刷题 — 蓝色 */
     #page-xingce .section-title { color: var(--c-xingce); }
-    #page-xingce .card { border-left: 3px solid var(--c-xingce); }
+    #page-xingce .card { border-left: 4px solid var(--c-xingce); background: linear-gradient(135deg, #fff, var(--c-xingce-bg)); }
     #page-xingce .day-chip.active { background: var(--c-xingce); border-color: var(--c-xingce); }
+    .xc-field input:focus { border-color: var(--c-xingce); background: #fff; }
+    .xc-review textarea:focus { border-color: var(--c-xingce); background: #fff; }
+    /* 时政推送 — 珊瑚红 */
+    #page-shizheng .section-title { color: var(--c-shizheng); }
+    #page-shizheng .card { border-left: 4px solid var(--c-shizheng); background: linear-gradient(135deg, #fff, var(--c-shizheng-bg)); }
+    #page-shizheng .material-card { border-left-color: var(--c-shizheng); background: linear-gradient(135deg, #fff, var(--c-shizheng-bg)); }
+    #page-shizheng .material-card .mc-title { color: var(--c-shizheng); }
+    #page-shizheng .material-card .mc-quote { border-left-color: var(--c-shizheng); background: rgba(255,107,107,0.06); }
+    #page-shizheng .material-card .tag { background: rgba(255,107,107,0.1); color: var(--c-shizheng); }
+    #page-shizheng .cat-tab.active { background: var(--c-shizheng); border-color: var(--c-shizheng); }
+    /* 申论素材 — 紫色 */
+    #page-shenlun .section-title { color: var(--c-shenlun); }
+    #page-shenlun .card { border-left: 4px solid var(--c-shenlun); background: linear-gradient(135deg, #fff, var(--c-shenlun-bg)); }
+    #page-shenlun .cat-tab.active { background: var(--c-shenlun); border-color: var(--c-shenlun); }
+    #page-shenlun .material-card { background: linear-gradient(135deg, #fff, var(--c-shenlun-bg)); }
+    /* 运动 — 绿色 */
+    #page-sport .section-title { color: var(--c-sport); }
+    #page-sport .card { border-left: 4px solid var(--c-sport); background: linear-gradient(135deg, #fff, var(--c-sport-bg)); }
+    #page-sport .day-chip.active { background: var(--c-sport); border-color: var(--c-sport); }
+    /* 养狗日记 — 青色 */
+    #page-diary .section-title { color: var(--c-diary); }
+    #page-diary .card { border-left: 4px solid var(--c-diary); background: linear-gradient(135deg, #fff, var(--c-diary-bg)); }
+    #page-diary .day-chip.active { background: var(--c-diary); border-color: var(--c-diary); }
 
     /* 行测刷题布局 */
     .xc-row { display: flex; gap: 10px; margin-bottom: 10px; }
@@ -267,20 +303,6 @@
     .xc-review textarea { width: 100%; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 13px; font-family: inherit; background: var(--surface2); color: var(--text); outline: none; resize: none; min-height: 70px; line-height: 1.6; }
     .xc-review textarea::placeholder { color: var(--text3); font-size: 12px; }
     .xc-review textarea:focus { border-color: var(--c-xingce); background: #fff; }
-    #page-shizheng .section-title { color: var(--c-shizheng); }
-    #page-shizheng .card { border-left: 3px solid var(--c-shizheng); }
-    #page-shizheng .material-card { border-left-color: var(--c-shizheng); }
-    #page-shizheng .material-card .mc-title { color: var(--c-shizheng); }
-    #page-shizheng .material-card .mc-quote { border-left-color: var(--c-shizheng); background: rgba(248,113,113,0.04); }
-    #page-shizheng .material-card .tag { background: rgba(248,113,113,0.08); color: var(--c-shizheng); }
-    #page-shenlun .section-title { color: var(--c-shenlun); }
-    #page-shenlun .card { border-left: 3px solid var(--c-shenlun); }
-    #page-sport .section-title { color: var(--c-sport); }
-    #page-sport .card { border-left: 3px solid var(--c-sport); }
-    #page-sport .day-chip.active { background: var(--c-sport); border-color: var(--c-sport); }
-    #page-diary .section-title { color: var(--c-diary); }
-    #page-diary .card { border-left: 3px solid var(--c-diary); }
-    #page-diary .day-chip.active { background: var(--c-diary); border-color: var(--c-diary); }
 
     .toast {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
