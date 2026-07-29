@@ -254,6 +254,19 @@
     #page-xingce .section-title { color: var(--c-xingce); }
     #page-xingce .card { border-left: 3px solid var(--c-xingce); }
     #page-xingce .day-chip.active { background: var(--c-xingce); border-color: var(--c-xingce); }
+
+    /* 行测刷题布局 */
+    .xc-row { display: flex; gap: 10px; margin-bottom: 10px; }
+    .xc-field { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+    .xc-field label { font-size: 11px; font-weight: 600; color: var(--text2); }
+    .xc-field input { width: 100%; border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; font-size: 13px; font-family: inherit; background: var(--surface2); color: var(--text); outline: none; }
+    .xc-field input::placeholder { color: var(--text3); font-size: 12px; }
+    .xc-field input:focus { border-color: var(--c-xingce); background: #fff; }
+    .xc-review { display: flex; flex-direction: column; gap: 3px; }
+    .xc-review label { font-size: 11px; font-weight: 600; color: var(--text2); }
+    .xc-review textarea { width: 100%; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 13px; font-family: inherit; background: var(--surface2); color: var(--text); outline: none; resize: none; min-height: 70px; line-height: 1.6; }
+    .xc-review textarea::placeholder { color: var(--text3); font-size: 12px; }
+    .xc-review textarea:focus { border-color: var(--c-xingce); background: #fff; }
     #page-shizheng .section-title { color: var(--c-shizheng); }
     #page-shizheng .card { border-left: 3px solid var(--c-shizheng); }
     #page-shizheng .material-card { border-left-color: var(--c-shizheng); }
@@ -354,30 +367,22 @@
       <div class="page" id="page-xingce">
         <div class="section-title">📖 行测刷题打卡</div>
         <div class="day-chips" id="xcDayChips"></div>
-        <div class="card"><h3>📝 言语理解</h3><table class="mini">
-          <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="yy_volume"></td></tr>
-          <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="yy_accuracy"></td></tr>
-          <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="yy_wrong"></td></tr>
-          <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="yy_review"></td></tr>
-        </table></div>
-        <div class="card"><h3>🧩 判断推理</h3><table class="mini">
-          <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="pd_volume"></td></tr>
-          <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="pd_accuracy"></td></tr>
-          <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="pd_wrong"></td></tr>
-          <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="pd_review"></td></tr>
-        </table></div>
-        <div class="card"><h3>🔢 数量关系</h3><table class="mini">
-          <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="sl_volume"></td></tr>
-          <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="sl_accuracy"></td></tr>
-          <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="sl_wrong"></td></tr>
-          <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="sl_review"></td></tr>
-        </table></div>
-        <div class="card"><h3>📊 资料分析</h3><table class="mini">
-          <tr><td>练习量</td><td><input placeholder="做了多少题..." data-field="zl_volume"></td></tr>
-          <tr><td>正确率</td><td><input placeholder="正确率 %..." data-field="zl_accuracy"></td></tr>
-          <tr><td>错题数</td><td><input placeholder="错了几道..." data-field="zl_wrong"></td></tr>
-          <tr><td>错题复盘</td><td><input placeholder="错在哪里..." data-field="zl_review"></td></tr>
-        </table></div>
+        <div class="card"><h3>📝 言语理解</h3>
+          <div class="xc-row"><div class="xc-field"><label>练习量</label><input placeholder="做了多少题..." data-field="yy_volume"></div><div class="xc-field"><label>正确率</label><input placeholder="如 85%" data-field="yy_accuracy"></div></div>
+          <div class="xc-review"><label>错题复盘</label><textarea placeholder="错在哪里，怎么改进..." data-field="yy_review"></textarea></div>
+        </div>
+        <div class="card"><h3>🧩 判断推理</h3>
+          <div class="xc-row"><div class="xc-field"><label>练习量</label><input placeholder="做了多少题..." data-field="pd_volume"></div><div class="xc-field"><label>正确率</label><input placeholder="如 85%" data-field="pd_accuracy"></div></div>
+          <div class="xc-review"><label>错题复盘</label><textarea placeholder="错在哪里，怎么改进..." data-field="pd_review"></textarea></div>
+        </div>
+        <div class="card"><h3>🔢 数量关系</h3>
+          <div class="xc-row"><div class="xc-field"><label>练习量</label><input placeholder="做了多少题..." data-field="sl_volume"></div><div class="xc-field"><label>正确率</label><input placeholder="如 85%" data-field="sl_accuracy"></div></div>
+          <div class="xc-review"><label>错题复盘</label><textarea placeholder="错在哪里，怎么改进..." data-field="sl_review"></textarea></div>
+        </div>
+        <div class="card"><h3>📊 资料分析</h3>
+          <div class="xc-row"><div class="xc-field"><label>练习量</label><input placeholder="做了多少题..." data-field="zl_volume"></div><div class="xc-field"><label>正确率</label><input placeholder="如 85%" data-field="zl_accuracy"></div></div>
+          <div class="xc-review"><label>错题复盘</label><textarea placeholder="错在哪里，怎么改进..." data-field="zl_review"></textarea></div>
+        </div>
       </div>
 
       <!-- PAGE: SHIZHENG -->
